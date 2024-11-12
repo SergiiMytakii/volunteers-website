@@ -3,19 +3,50 @@
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --background: #f8f9fa;
+  --foreground: #333;
+  --primary: #d9534f;
+  --primary-hover: #c9302c;
+  --shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+@layer base {
+  h1, h2, h3, p {
+    text-align: center;
+  }
+}
+
+@layer components {
+  .section {
+    @apply py-10 px-5 bg-white mb-5 rounded-lg;
+    box-shadow: var(--shadow);
+  }
+
+  .button {
+    @apply inline-block px-6 py-3 bg-[#d9534f] text-white rounded-md font-bold my-2.5 cursor-pointer hover:bg-[#c9302c] transition-colors no-underline;
+  }
+
+  .form-container {
+    @apply max-w-[500px] mx-auto text-left;
+  }
+
+  .form-label {
+    @apply font-bold block mt-2.5;
+  }
+
+  .form-input {
+    @apply w-full p-2 mt-1.5 border border-[#ddd] rounded-md;
+  }
+
+  .submit-button {
+    @apply mt-4 bg-[#d9534f] text-white cursor-pointer border-none rounded-md hover:bg-[#c9302c];
+  }
 }

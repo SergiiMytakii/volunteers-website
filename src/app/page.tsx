@@ -1,101 +1,102 @@
-import Image from "next/image";
-
-export default function Home() {
+export default function VolunteersPage() {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+    <div className="container mx-auto px-4">
+      {/* Header Section */}
+      <header className="my-8 bg-white p-8 rounded-lg shadow-md text-center">
+        <h1 className="text-3xl font-bold mb-4">Дива трапляються</h1>
+        <p className="mb-4">Допоможіть нам зробити свято для дітей, які цього потребують. Подаруйте трішки дива разом з нами!</p>
+        <a href="#contact" className="inline-block px-6 py-3 bg-red-500 text-white rounded-md hover:bg-red-600 transition-colors">
+          Долучитися до проєкту
+        </a>
+      </header>
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
+      {/* About Project Section */}
+      <section className="my-8 bg-white p-8 rounded-lg shadow-md">
+        <h2 className="text-2xl font-bold mb-4 text-center">Про наш проєкт</h2>
+        <p className="text-center mb-4">«Дива трапляються» - це проєкт, який дає можливість дітям відчути тепло свята та отримати бажані подарунки. Ми працюємо з дітьми, які знаходяться в складних життєвих обставинах, і хочемо принести їм радість у цей особливий час.</p>
+        <p className="text-center">Кожна дитина має свою мрію, і ми збираємо подарунки саме для того, щоб ці мрії стали реальністю.</p>
+      </section>
+
+      {/* Call to Action Section */}
+      <section className="my-8 bg-white p-8 rounded-lg shadow-md text-center">
+        <h2 className="text-2xl font-bold mb-4">Як ви можете допомогти</h2>
+        <p className="mb-4">Ви можете обрати конкретну дитину, дізнатись про її мрію та підготувати подарунок спеціально для неї. Разом ми можемо створити незабутній святковий момент для кожного з них.</p>
+        <a href="#contact" className="inline-block px-6 py-3 bg-red-500 text-white rounded-md hover:bg-red-600 transition-colors">
+          Зробити подарунок
+        </a>
+      </section>
+
+      {/* Contact Form Section */}
+      <section id="contact" className="my-8 bg-white p-8 rounded-lg shadow-md">
+        <h2 className="text-2xl font-bold mb-4 text-center">Контакти</h2>
+        <p className="text-center mb-6">Якщо у вас є питання або ви хочете взяти участь, будь ласка, заповніть форму нижче.</p>
+        
+        <form className="max-w-lg mx-auto space-y-4">
+          <div className="flex flex-col">
+            <label htmlFor="phone" className="font-bold mb-1">Номер телефону:</label>
+            <input
+              type="tel"
+              id="phone"
+              name="phone"
+              placeholder="+380 ХХХ ХХХ ХХХ"
+              required
+              className="border rounded-md p-2"
             />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+          </div>
+
+          <div className="flex flex-col">
+            <label htmlFor="email" className="font-bold mb-1">Електронна пошта:</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              placeholder="you@example.com"
+              required
+              className="border rounded-md p-2"
+            />
+          </div>
+
+          <div className="flex flex-col">
+            <label htmlFor="child_number" className="font-bold mb-1">Номер картки дитини:</label>
+            <input
+              type="number"
+              id="child_number"
+              name="child_number"
+              placeholder="1, 2, 3..."
+              min="1"
+              required
+              className="border rounded-md p-2"
+            />
+          </div>
+
+          <div className="flex flex-col">
+            <label htmlFor="comments" className="font-bold mb-1">Коментарі:</label>
+            <textarea
+              id="comments"
+              name="comments"
+              placeholder="Ваші коментарі або побажання..."
+              rows={4}
+              className="border rounded-md p-2"
+            />
+          </div>
+
+          <button
+            type="submit"
+            className="w-full bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition-colors"
           >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+            Надіслати
+          </button>
+        </form>
+      </section>
+
+      {/* Thank You Section */}
+      <section className="my-8 bg-white p-8 rounded-lg shadow-md text-center">
+        <h2 className="text-2xl font-bold mb-4">Дякуємо за вашу підтримку!</h2>
+        <p className="max-w-2xl mx-auto">
+          Завдяки вашій допомозі ми зможемо подарувати дітям чудові моменти та яскраві враження, 
+          які вони запам`ятають надовго.
+        </p>
+      </section>
     </div>
   );
 }
