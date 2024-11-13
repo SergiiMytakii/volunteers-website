@@ -16,6 +16,7 @@ interface Child {
   age: number;
   dream: string;
   imgSrc: string;
+  fundOpen: boolean;
 }
 
 export default function HowToHelp() {
@@ -89,17 +90,32 @@ export default function HowToHelp() {
                   <div>
                     <h3 className="text-xl font-semibold mb-2">{child.name}, {child.age} років</h3>
                     <p className="text-gray-600 min-h-[3rem] line-clamp-2">{child.dream}</p>
+                    <p className="text-gray-600 min-h-[1rem] line-clamp-2">Картка  {child.id}</p>
                   </div>
-                  <div className="mt-auto pt-6">
-                    <button className="w-full bg-orange-500 text-white py-3 rounded-full hover:bg-red-600 transition-colors">
-                      Хочу допомогти
-                    </button>
-                  </div>
+                  <div className="mt-auto pt-8 flex gap-4">
+                  {child.fundOpen ? (
+                     <>
+                    <a href="#contact" className="w-1/2 bg-red-500 text-white py-3 rounded-full hover:bg-red-600 transition-colors text-center">
+                        Хочу допомогти
+                    </a>
+                    <a 
+                        href="https://send.monobank.ua/jar/4cancXNM46" 
+                        target="_blank" 
+                        rel="noopener noreferrer" 
+                        className="w-1/2 border-2 border-red-500 text-red-500 py-3 rounded-full hover:bg-red-50 transition-colors text-center"
+                        >
+                        Зберу подарунок
+                    </a>   </>
+                    ) : (
+                        <div className="w-full text-center py-3 bg-gray-200 rounded-full text-gray-600">
+                        Збір закрито
+                        </div>
+                    )}
+                                        </div>
                 </div>
               </div>
             </SwiperSlide>
           ))}
-
         <div ref={prevRef} className="swiper-button-prev"></div>
         <div ref={nextRef} className="swiper-button-next"></div>
         <div className="swiper-pagination"></div>
