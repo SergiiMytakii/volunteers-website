@@ -3,23 +3,32 @@ import nodemailer from 'nodemailer';
 
 export async function POST(req: Request) {
   console.log('send email') 
-  console.log(process.env.ZOHO_SMTP_HOST,) 
 
   try {
     const { name, phone, email, cardNumber, comments } = await req.json();
 
     const transporter = nodemailer.createTransport({
-      host: process.env.ZOHO_SMTP_HOST,
-      port: parseInt(process.env.ZOHO_SMTP_PORT || '465', 10),
+      host: 'smtp.zoho.com',
+      port: 587,
       secure: false,
       auth: {
-        user: process.env.ZOHO_EMAIL,
-        pass: process.env.ZOHO_PASSWORD,
+        user: 'info@aiassist4u.com',
+        pass: 'RrnCrZ2GaSdD',
       },
     });
+    // const transporter = nodemailer.createTransport({
+    //   host: process.env.ZOHO_SMTP_HOST,
+    //   port: parseInt(process.env.ZOHO_SMTP_PORT || '465', 10),
+    //   secure: false,
+    //   auth: {
+    //     user: process.env.ZOHO_EMAIL,
+    //     pass: process.env.ZOHO_PASSWORD,
+    //   },
+    // });
 
     await transporter.sendMail({
-      from: process.env.ZOHO_EMAIL,
+      from: 'info@aiassist4u.com',
+      // from: process.env.ZOHO_EMAIL,
       to: 'bukaskina1989@gmail.com', 
       // to: process.env.ZOHO_EMAIL, 
       subject: "Нова заявка на подарунок",
