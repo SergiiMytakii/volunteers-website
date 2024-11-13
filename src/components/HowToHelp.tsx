@@ -96,7 +96,7 @@ export default function HowToHelp() {
                   {child.fundOpen ? (
                      <>
                     <a href="#contact" className="w-1/2 bg-red-500 text-white py-3 rounded-full hover:bg-red-600 transition-colors text-center">
-                        Хочу допомогти
+                        Зберу подарунок
                     </a>
                     <a 
                         href="https://send.monobank.ua/jar/4cancXNM46" 
@@ -104,7 +104,7 @@ export default function HowToHelp() {
                         rel="noopener noreferrer" 
                         className="w-1/2 border-2 border-red-500 text-red-500 py-3 rounded-full hover:bg-red-50 transition-colors text-center"
                         >
-                        Зберу подарунок
+                        Хочу допомогти
                     </a>   </>
                     ) : (
                         <div className="w-full text-center py-3 bg-gray-200 rounded-full text-gray-600">
