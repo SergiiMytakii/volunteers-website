@@ -1,7 +1,7 @@
 'use client';
 import { useLanguage } from '../app/LanguageContext';
 export default function Hero() {
-  const { lang, setLang } = useLanguage();
+  const { lang} = useLanguage();
   const scrollToSection = (elementId: string) => {
     const element = document.getElementById(elementId);
     if (element) {

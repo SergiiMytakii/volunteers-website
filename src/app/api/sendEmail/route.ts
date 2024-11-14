@@ -29,8 +29,8 @@ export async function POST(req: Request) {
     await transporter.sendMail({
       from: 'info@aiassist4u.com',
       // from: process.env.ZOHO_EMAIL,
-      // to: 'bukaskina1989@gmail.com', 
-      to: process.env.ZOHO_EMAIL, 
+      to: 'bukaskina1989@gmail.com', 
+      // to: process.env.ZOHO_EMAIL, 
       subject: "Нова заявка на подарунок",
       text: `Імʼя: ${name}\n Телефон: ${phone}\nEmail: ${email}\nНомер картки дитини: ${cardNumber}\Коментарі: ${comments}`,
       html: `

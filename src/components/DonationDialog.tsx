@@ -42,7 +42,7 @@ export default function DonationDialog({ isOpen, onClose, onConfirm, cardNumber,
         <h2 className="text-xl font-bold mb-4">Допомогти дитині: {kidName}</h2>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block text-gray-700 mb-2">Ваше ім'я:</label>
+            <label className="block text-gray-700 mb-2">Ваше ім`я:</label>
             <input
               type="text"
               value={formData.name}

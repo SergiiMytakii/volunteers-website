@@ -28,7 +28,7 @@ export default function HowToHelp() {
   const [activeCardId, setActiveCardId] = useState<string | null>(null);
 
 const handleDonation = async (formData: DonationFormData) => {
-  const response =  fetch('/api/sendEmailDonation', {
+  fetch('/api/sendEmailDonation', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(formData),
