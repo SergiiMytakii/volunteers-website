@@ -52,7 +52,7 @@ export default function ContactForm() {
   return (
     <section id="contact" className="w-full bg-gray-50 py-20">
       <div className="max-w-7xl mx-auto px-4">
-        <h2 className="text-4xl font-bold text-center mb-12">Контакти</h2>
+        <h2 className="text-4xl font-bold text-center mb-12">Відправити заявку</h2>
         <form onSubmit={handleSubmit} className="max-w-xl mx-auto space-y-6">
         <div>
             <label className="block text-gray-700 mb-2 font-medium">Ваше імʼя:</label>

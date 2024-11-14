@@ -1,6 +1,15 @@
+'use client';
+import { useLanguage } from '../app/LanguageContext';
 export default function Hero() {
+  const { lang, setLang } = useLanguage();
+  const scrollToSection = (elementId: string) => {
+    const element = document.getElementById(elementId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
     return (
-      <header className="w-full h-screen bg-cover bg-center relative mt-16" 
+      <header id="home" className="w-full h-screen bg-cover bg-center relative mt-16" 
         style={{
           backgroundImage: `url('https://firebasestorage.googleapis.com/v0/b/cherch-od2024.firebasestorage.app/o/volunteers-website-assets%2Fphoto_2024-11-12%2017.40.58.jpeg?alt=media&token=4b8b9d93-85e6-46a5-af8e-f253a16e8950')`
         }}>
@@ -13,7 +22,7 @@ export default function Hero() {
             
             {/* Left side (Title) */}
             <div className="text-left">
-              <h1 className="text-5xl font-bold">Дива трапляються</h1>
+              <h1 className="text-5xl font-bold">{lang == 'uk'?  'Дива трапляються' :  'Miracles happens' } </h1>
             </div>
   
             {/* Right side (Paragraphs + Button) */}
@@ -24,9 +33,12 @@ export default function Hero() {
               <p className="text-1xl mb-8 max-w-2xl text-left">
                 Подаруй частинку дива дітям, які цього потребують. Долучайтеся до нашої ініціативи, щоб жодна дитина не залишилась без омріяного подарунка.
               </p>
-              <a href="#contact" className="bg-orange-500 text-white px-8 py-4 text-lg rounded-full hover:bg-orange-600 transition-colors">
-                Долучитися до збору подарунків
-              </a>
+              <button 
+                onClick={() => scrollToSection('help')} 
+                className="bg-red-500 text-white px-8 py-4 text-lg rounded-full hover:bg-orange-600 transition-colors"
+              >
+                Хочу допомогти
+              </button>
             </div>
   
           </div>

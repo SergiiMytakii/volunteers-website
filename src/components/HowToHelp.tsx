@@ -2,6 +2,7 @@
 
 import { useEffect, useState,  useRef } from "react";
 import { db } from "../firebase";
+import DonationDialog, { DonationFormData } from "./DonationDialog";
 import { collection, getDocs } from 'firebase/firestore';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination, A11y } from 'swiper/modules';
@@ -24,6 +25,22 @@ export default function HowToHelp() {
   const prevRef = useRef<HTMLDivElement>(null);
   const nextRef = useRef<HTMLDivElement>(null);
 
+  const [activeCardId, setActiveCardId] = useState<string | null>(null);
+
+const handleDonation = async (formData: DonationFormData) => {
+  const response =  fetch('/api/sendEmailDonation', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(formData),
+  });
+    window.open(
+      `https://send.monobank.ua/jar/4cancXNM46?amount=${formData.amount}?t=from:${formData.name},%20phone:${formData.phone},%20child:${formData.cardNumber}`,
+      "_blank",
+      "noopener,noreferrer"
+    );
+  setActiveCardId(null);
+};
+// 
   useEffect(() => {
     const fetchChildren = async () => {
       const querySnapshot = await getDocs(collection(db, "kids"));
@@ -37,15 +54,22 @@ export default function HowToHelp() {
     fetchChildren();
   }, []);
 
+  const scrollToSection = (elementId: string) => {
+    const element = document.getElementById(elementId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <section id="help" className="w-full bg-white py-20">
       <div className="max-w-7xl mx-auto px-4">
         <h2 className="text-4xl font-bold text-center mb-12">Як ви можете допомогти</h2>
         <div className="max-w-3xl mx-auto text-lg text-gray-700 text-center">
           <p className="mb-8">Ви можете обрати конкретну дитину, дізнатись про її мрію та підготувати подарунок спеціально для неї. Разом ми можемо створити незабутній святковий момент для кожного з них.</p>
-          <a href="#contact" className="bg-red-500 text-white px-8 py-4 rounded-full hover:bg-red-600 transition-colors inline-block">
+          {/* <a href="#contact" className="bg-red-500 text-white px-8 py-4 rounded-full hover:bg-red-600 transition-colors inline-block">
             Зробити подарунок
-          </a>
+          </a> */}
         </div>
         <Swiper
           modules={[Navigation, Pagination, A11y]}
@@ -76,9 +100,9 @@ export default function HowToHelp() {
           className="mt-12 relative !pb-12"
         >
           {childrenData.map((child) => (
-            <SwiperSlide key={child.id} className="h-[500px] pb-4 ">
+            <SwiperSlide key={child.id} className="h-[600px] pb-4 ">
               <div className="bg-white rounded-lg shadow-lg overflow-hidden">
-                <div className="h-[250px] relative">
+                <div className="h-[300px] relative">
                   <Image 
                     src={child.imgSrc} 
                     alt={child.name} 
@@ -95,17 +119,26 @@ export default function HowToHelp() {
                   <div className="mt-auto pt-8 flex gap-4">
                   {child.fundOpen ? (
                      <>
-                    <a href="#contact" className="w-1/2 bg-red-500 text-white py-3 rounded-full hover:bg-red-600 transition-colors text-center">
+                    <button 
+                    onClick={() => scrollToSection("contact")}  
+                    className="w-1/2 bg-red-500 text-white py-3 rounded-full hover:bg-red-600 transition-colors text-center">
                         Зберу подарунок
-                    </a>
-                    <a 
-                        href="https://send.monobank.ua/jar/4cancXNM46" 
-                        target="_blank" 
-                        rel="noopener noreferrer" 
+                    </button>
+                    <button 
+                        onClick={() => setActiveCardId(child.id)} 
                         className="w-1/2 border-2 border-red-500 text-red-500 py-3 rounded-full hover:bg-red-50 transition-colors text-center"
                         >
                         Хочу допомогти
-                    </a>   </>
+                        </button>
+                        <DonationDialog 
+                              isOpen={activeCardId === child.id}
+                              onClose={() => setActiveCardId(null)}
+                            onConfirm={handleDonation}
+                            cardNumber={child.id}
+                          kidName={child.name}
+                          />
+                        
+                          </>
                     ) : (
                         <div className="w-full text-center py-3 bg-gray-200 rounded-full text-gray-600">
                         Збір закрито

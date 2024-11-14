@@ -2,10 +2,8 @@ import { NextResponse } from 'next/server';
 import nodemailer from 'nodemailer';
 
 export async function POST(req: Request) {
-  console.log('send email') 
-
   try {
-    const { name, phone, email, cardNumber, comments } = await req.json();
+    const { name, phone, amount, cardNumber, comments } = await req.json();
 
     const transporter = nodemailer.createTransport({
       host: 'smtp.zoho.com',
@@ -31,13 +29,13 @@ export async function POST(req: Request) {
       // from: process.env.ZOHO_EMAIL,
       // to: 'bukaskina1989@gmail.com', 
       to: process.env.ZOHO_EMAIL, 
-      subject: "Нова заявка на подарунок",
-      text: `Імʼя: ${name}\n Телефон: ${phone}\nEmail: ${email}\nНомер картки дитини: ${cardNumber}\Коментарі: ${comments}`,
+      subject: "Новий донат на подарунок",
+      text: `Імʼя: ${name}\n Телефон: ${phone}\nНомер картки дитини: ${cardNumber}\Коментарі: ${comments}`,
       html: `
       <p><strong>Імʼя:</strong> ${name}</p>
       <p><strong>Телефон:</strong> ${phone}</p>
-      <p><strong>Email:</strong> ${email}</p>
       <p><strong>Номер картки дитини:</strong> ${cardNumber}</p>
+      <p><strong>Сумa:</strong> ${amount}грн</p> 
       <p><strong>Коментарі:</strong> ${comments}</p>
     `,
     });

@@ -39,14 +39,14 @@ export default function About() {
 
             {/* Stats section */}
             <div className="flex flex-col gap-8 md:flex-row md:gap-8 text-center">
-              <div className="text-purple-700 text-5xl font-bold">
+              <div className="text-purple-700 text-3xl font-bold">
                 16
                 <span className="block text-lg font-normal text-gray-700">подарунків зібрано</span>
               </div>
-              <div className="text-purple-700 text-5xl font-bold">
-                25,000
+              <div className="text-purple-700 text-3xl font-bold">
+                80
                 <span className="block text-lg font-normal text-gray-700">
-                  Очікує підтвердження 2024
+                  Очікує на подарунок
                 </span>
               </div>
             </div>
