@@ -4,7 +4,7 @@ import nodemailer from 'nodemailer';
 
 export async function POST(req: Request) {
   try {
-    const { name, phone, amount, cardNumber, comments } = await req.json();
+    const { name, cardNumber, comments } = await req.json();
 
     const transporter = nodemailer.createTransport({
       host: ZOHO_SMTP_HOST,
