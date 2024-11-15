@@ -15,7 +15,7 @@ export async function GET() {
     });
     const doc = new GoogleSpreadsheet(SHEET_ID, serviceAccountAuth);
     
-    await doc.loadInfo(true); // loads document properties and worksheets
+    await doc.loadInfo(); // loads document properties and worksheets
     await doc.updateProperties({ title: "children data" });
     
     const sheet = doc.sheetsByIndex[0]; 

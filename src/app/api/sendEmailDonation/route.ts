@@ -12,8 +12,7 @@ export async function POST(req: Request) {
       secure: false,
       auth: {
         user: ZOHO_EMAIL,
-        pass: 'F4tdMJZfkiKH',
-        // pass: process.env.ZOHO_PASSWORD,
+        pass: process.env.ZOHO_PASSWORD,
       },
     });
 
