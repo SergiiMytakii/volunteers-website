@@ -1,16 +1,16 @@
 'use client';
 
+// import { db } from "../firebase";
+// import { collection, getDocs } from 'firebase/firestore';
 import { useEffect, useState,  useRef } from "react";
-import { db } from "../firebase";
 import DonationDialog, { DonationFormData } from "./DonationDialog";
-import { collection, getDocs } from 'firebase/firestore';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination, A11y } from 'swiper/modules';
 import Image from 'next/image';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
-import { MONO_JAR_LINK } from "@/app/constants";
+import { MONO_JAR_LINK,} from "@/app/constants";
 
 interface Child {
   id: string;
@@ -28,6 +28,23 @@ export default function HowToHelp() {
 
   const [activeCardId, setActiveCardId] = useState<string | null>(null);
 
+  const fetchChildrenData = async () => {
+   try {
+     const response = await fetch('/api/sheets', {
+      method: "GET"
+     });
+     if (!response.ok) {
+      console.error('Failed to fetch Google Sheet data');
+    }
+    
+    const { data } = await response.json();
+    return data;
+   } catch (error) {
+   console.error('Error fetching Google Sheet data:', error);
+    return null;
+   }
+  };
+
 const handleDonation = async (formData: DonationFormData) => {
   fetch('/api/sendEmailDonation', {
     method: 'POST',
@@ -43,16 +60,24 @@ const handleDonation = async (formData: DonationFormData) => {
 };
 // 
   useEffect(() => {
-    const fetchChildren = async () => {
-      const querySnapshot = await getDocs(collection(db, "kids"));
-      const children: Child[] = [];
-      querySnapshot.forEach((doc) => {
-        children.push(doc.data() as Child);
-      });
+    //this fetch from firebase (not in use now)
+    // const fetchChildren = async () => {
+    //   const querySnapshot = await getDocs(collection(db, "kids"));
+    //   const children: Child[] = [];
+    //   querySnapshot.forEach((doc) => {
+    //     children.push(doc.data() as Child);
+    //   });
+    //   setChildrenData(children);
+    // };
+
+    const fetchData = async () => {
+      const children = await fetchChildrenData();
+      if(children)
       setChildrenData(children);
     };
-
-    fetchChildren();
+    
+    fetchData();
+    
   }, []);
 
   const scrollToSection = (elementId: string) => {
