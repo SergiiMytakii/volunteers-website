@@ -1,12 +1,11 @@
 
-import type { NextApiRequest, NextApiResponse } from 'next';
 import { GoogleSpreadsheet } from 'google-spreadsheet';
 import { JWT } from 'google-auth-library';
 import { SHEET_ID } from '@/app/constants';
 
 
 
-export async function GET(req: Request) {
+export async function GET() {
   console.log('Fetching data from Google Sheets...');
   try {
     const serviceAccountAuth = new JWT({
@@ -33,9 +32,9 @@ export async function GET(req: Request) {
       status: 200,
       headers: { 'Content-Type': 'application/json' },
     });
-  } catch (error: any) {
+  } catch (error ) {
     console.log(error);
-    return new Response(JSON.stringify({ error: error.message }), {
+    return new Response(JSON.stringify({ error: error}), {
       status: 500,
       headers: { 'Content-Type': 'application/json' },
     });
