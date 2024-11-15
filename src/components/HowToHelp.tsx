@@ -10,6 +10,7 @@ import Image from 'next/image';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
+import { MONO_JAR_LINK } from "@/app/constants";
 
 interface Child {
   id: string;
@@ -34,7 +35,7 @@ const handleDonation = async (formData: DonationFormData) => {
     body: JSON.stringify(formData),
   });
     window.open(
-      `https://send.monobank.ua/jar/4cancXNM46?amount=${formData.amount}?t=from:${formData.name},%20phone:${formData.phone},%20child:${formData.cardNumber}`,
+      `${MONO_JAR_LINK}?t=from:${formData.name},%20child:${formData.cardNumber}`,
       "_blank",
       "noopener,noreferrer"
     );

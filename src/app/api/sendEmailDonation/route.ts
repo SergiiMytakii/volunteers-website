@@ -1,3 +1,4 @@
+import { ZOHO_EMAIL, ZOHO_SMTP_HOST, ZOHO_SMTP_PORT } from '@/app/constants';
 import { NextResponse } from 'next/server';
 import nodemailer from 'nodemailer';
 
@@ -6,23 +7,15 @@ export async function POST(req: Request) {
     const { name, phone, amount, cardNumber, comments } = await req.json();
 
     const transporter = nodemailer.createTransport({
-      host: 'smtp.zoho.com',
-      port: 587,
+      host: ZOHO_SMTP_HOST,
+      port: ZOHO_SMTP_PORT,
       secure: false,
       auth: {
-        user: 'info@aiassist4u.com',
+        user: ZOHO_EMAIL,
         pass: 'RrnCrZ2GaSdD',
+        // pass: process.env.ZOHO_PASSWORD,
       },
     });
-    // const transporter = nodemailer.createTransport({
-    //   host: process.env.ZOHO_SMTP_HOST,
-    //   port: parseInt(process.env.ZOHO_SMTP_PORT || '465', 10),
-    //   secure: false,
-    //   auth: {
-    //     user: process.env.ZOHO_EMAIL,
-    //     pass: process.env.ZOHO_PASSWORD,
-    //   },
-    // });
 
     await transporter.sendMail({
       from: 'info@aiassist4u.com',
