@@ -3,7 +3,6 @@ import { NextResponse } from 'next/server';
 import nodemailer from 'nodemailer';
 
 export async function POST(req: Request) {
-  console.log('send email') 
 
   try {
     const { name, phone, email, cardNumber, comments } = await req.json();
@@ -14,15 +13,14 @@ export async function POST(req: Request) {
       secure: false,
       auth: {
         user: ZOHO_EMAIL,
-        pass: 'RrnCrZ2GaSdD',
+        pass: 'F4tdMJZfkiKH', 
         // pass: process.env.ZOHO_PASSWORD,
       },
     });
   
 
     await transporter.sendMail({
-      from: 'info@aiassist4u.com',
-      // from: process.env.ZOHO_EMAIL,
+      from: ZOHO_EMAIL,
       to: 'bukaskina1989@gmail.com', 
       // to: process.env.ZOHO_EMAIL, 
       subject: "Нова заявка на подарунок",

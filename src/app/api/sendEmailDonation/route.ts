@@ -12,24 +12,21 @@ export async function POST(req: Request) {
       secure: false,
       auth: {
         user: ZOHO_EMAIL,
-        pass: 'RrnCrZ2GaSdD',
+        pass: 'F4tdMJZfkiKH',
         // pass: process.env.ZOHO_PASSWORD,
       },
     });
 
     await transporter.sendMail({
-      from: 'info@aiassist4u.com',
-      // from: process.env.ZOHO_EMAIL,
-      to: 'bukaskina1989@gmail.com', 
-      // to: process.env.ZOHO_EMAIL, 
+      from: ZOHO_EMAIL,
+      // to: 'bukaskina1989@gmail.com', 
+      to: ZOHO_EMAIL, 
       subject: "Новий донат на подарунок",
-      text: `Імʼя: ${name}\n Телефон: ${phone}\nНомер картки дитини: ${cardNumber}\Коментарі: ${comments}`,
+      text: `Імʼя: ${name}\nНомер картки дитини: ${cardNumber}\Коментар: ${comments}`,
       html: `
       <p><strong>Імʼя:</strong> ${name}</p>
-      <p><strong>Телефон:</strong> ${phone}</p>
       <p><strong>Номер картки дитини:</strong> ${cardNumber}</p>
-      <p><strong>Сумa:</strong> ${amount}грн</p> 
-      <p><strong>Коментарі:</strong> ${comments}</p>
+      <p><strong>Коментар:</strong> ${comments}</p>
     `,
     });
 

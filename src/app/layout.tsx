@@ -1,4 +1,4 @@
-// 'use client';
+'use client';
 
 import { Montserrat } from 'next/font/google';
 import "./globals.css";
@@ -12,10 +12,10 @@ const montserrat = Montserrat({
 });
 
 
-export const metadata: Metadata = {
-    title: "Очима До Очей",
-    description: "Волонтерський проект",
-  };
+// export const metadata: Metadata = {
+//     title: "Очима До Очей",
+//     description: "Волонтерський проект",
+//   };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   const { lang } = useLanguage();

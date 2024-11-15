@@ -22,9 +22,9 @@ export default function Navigation() {
 
   return (
     <nav className="w-full bg-white shadow-md fixed top-0 z-50">
-      <div className="max-w-7xl mx-auto px-4">
+      <div className="max-w-7xl mx-auto px-4 py-1">
         <div className="flex justify-between items-center h-16">
-          <div className="flex-shrink-0">
+          <div className="flex-shrink-0 px-2">
             <button     onClick={() => scrollToSection('home')} 
             className="flex items-center">
              <Image 
@@ -32,6 +32,7 @@ export default function Navigation() {
              alt="Logo"
              width={60}
              height={60}
+             
              className="object-contain"
            />
            </button>

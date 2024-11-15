@@ -52,6 +52,7 @@ export default function DonationDialog({ isOpen, onClose, onConfirm, cardNumber,
               required
             />
           </div>
+          {/* not needed for now
           <div>
             <label className="block text-gray-700 mb-2">Телефон:</label>
             <input
@@ -62,8 +63,8 @@ export default function DonationDialog({ isOpen, onClose, onConfirm, cardNumber,
                 placeholder="+380 ХХХ ХХХ ХХХ"
               required
             />
-          </div>
-          <div>
+          </div> */}
+          {/* <div>
             <label className="block text-gray-700 mb-2">Сума:</label>
             <input
               type="number"
@@ -74,16 +75,16 @@ export default function DonationDialog({ isOpen, onClose, onConfirm, cardNumber,
               placeholder="Введіть суму"
               required
             />
-          </div>
+          </div> */}
           <div>
-            <label className="block text-gray-700 mb-2 font-medium">Коментарі:</label>
+            <label className="block text-gray-700 mb-2 font-medium">Коментар:</label>
             <textarea
               name="comments"
               value={formData.comments}
               onChange={(e) => setFormData({...formData, comments: e.target.value})}
               className="w-full px-3 py-2 rounded border"
               rows={1}
-              placeholder="Ваші коментар."
+              placeholder="Ваш коментар."
             ></textarea>
           </div>
           <div className="flex gap-3 mt-6">
