@@ -25,17 +25,35 @@ export default function Navigation() {
       <div className="max-w-7xl mx-auto px-4 py-1">
         <div className="flex justify-between items-center h-16">
           <div className="flex-shrink-0 px-2">
-            <button     onClick={() => scrollToSection('home')} 
-            className="flex items-center">
-             <Image 
-             src="/logoTransperent.png"
-             alt="Logo"
-             width={60}
-             height={60}
-             
-             className="object-contain"
-           />
-           </button>
+            <div className="flex flex-row gap-4">
+            <button onClick={() => scrollToSection('home')} className="flex items-center">
+              <Image 
+                src="/logoTransperent.png"
+                alt="Logo"
+                width={60}
+                height={60}
+                className="object-contain"
+              />
+            </button>
+            <button onClick={() => scrollToSection('home')} className="flex items-center">
+              <Image 
+                src="/logoTransperentOrange.png"
+                alt="Logo"
+                width={60}
+                height={60}
+                className="object-contain"
+              />
+            </button>
+            <button onClick={() => scrollToSection('home')} className="flex items-center">
+              <Image 
+                src="/logoTransperent.png"
+                alt="Logo"
+                width={60}
+                height={60}
+                className="object-contain"
+              />
+            </button>
+          </div>
            
           </div>
 

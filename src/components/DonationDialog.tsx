@@ -1,5 +1,6 @@
 'use client';
 
+import { useLanguage } from '@/app/LanguageContext';
 import { useState } from 'react';
 
 interface DonationDialogProps {
@@ -28,7 +29,7 @@ export default function DonationDialog({ isOpen, onClose, onConfirm, cardNumber,
     kidName: kidName,
     comments: '',
   });
-
+  const { lang } = useLanguage();
   const handleSubmit = (e: React.FormEvent) =>  {
     e.preventDefault();
     onConfirm(formData);
@@ -39,16 +40,18 @@ export default function DonationDialog({ isOpen, onClose, onConfirm, cardNumber,
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" role="dialog" aria-modal="true">
       <div className="bg-white rounded-lg p-6 max-w-sm w-full m-4">
-        <h2 className="text-xl font-bold mb-4">Допомогти дитині: {kidName}</h2>
+        <h2 className="text-xl font-bold mb-4">{lang === 'uk' ? "Допомогти дитині:" : "Help to: "} {kidName}</h2>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block text-gray-700 mb-2">Ваше ім`я:</label>
+            <label className="block text-gray-700 mb-2">{lang === 'uk' ? "Ваше ім`я:": "Your name"}</label>
             <input
               type="text"
               value={formData.name}
               onChange={(e) => setFormData({...formData, name: e.target.value})}
               className="w-full px-3 py-2 rounded border"
-              placeholder="Введіть ваше імʼя"
+              placeholder={
+                lang === "uk" ? "Введіть ваше імʼя" : "Enter your name"
+              }
               required
             />
           </div>
@@ -77,14 +80,14 @@ export default function DonationDialog({ isOpen, onClose, onConfirm, cardNumber,
             />
           </div> */}
           <div>
-            <label className="block text-gray-700 mb-2 font-medium">Коментар:</label>
+            <label className="block text-gray-700 mb-2 font-medium">{lang === 'uk' ? "Коментар:" : "Comment"}</label>
             <textarea
               name="comments"
               value={formData.comments}
               onChange={(e) => setFormData({...formData, comments: e.target.value})}
               className="w-full px-3 py-2 rounded border"
               rows={1}
-              placeholder="Ваш коментар."
+              placeholder={lang === "uk" ? "Ваш коментар." : "Your comment."}
             ></textarea>
           </div>
           <div className="flex gap-3 mt-6">
@@ -93,13 +96,13 @@ export default function DonationDialog({ isOpen, onClose, onConfirm, cardNumber,
               onClick={onClose}
               className="flex-1 px-4 py-2 border rounded-full"
             >
-              Скасувати
+              {lang === "uk" ? " Скасувати" : "Cancel"}
             </button>
             <button
               type="submit"
               className="flex-1 bg-red-500 text-white px-4 py-2 rounded-full hover:bg-red-600"
             >
-              Продовжити
+              {lang === "uk" ? "Продовжити" : "Continue"}
             </button>
           </div>
         </form>

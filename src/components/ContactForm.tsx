@@ -1,8 +1,10 @@
 'use client';
 
+import { useLanguage } from '@/app/LanguageContext';
 import { useState } from 'react';
 
 export default function ContactForm() {
+  const { lang } = useLanguage();
   const [formData, setFormData] = useState({
     name:'',
     phone: '',
@@ -37,12 +39,22 @@ export default function ContactForm() {
             cardNumber: '',
             comments: '',
         });
-        setStatus('Вашу заявку відправлено!  Ми звʼяжемося з вами найближчим часом' );
+        setStatus(
+          lang == "uk"
+            ? "Вашу заявку відправлено!  Ми звʼяжемося з вами найближчим часом"
+            : "Your request has been sent! We will contact you soon"
+        );
       } else {
-        setStatus('Щось пішло не так... Спробуйте ще раз, будь ласка! ');
+        setStatus(lang == "uk"
+            ? "Щось пішло не так... Спробуйте ще раз, будь ласка! "
+            : "Something went wrong... Please try again!"
+        );;
       }
     } catch (error) {
-      setStatus('Щось пішло не так... Спробуйте ще раз, будь ласка! ');
+      setStatus(lang == "uk"
+          ? "Щось пішло не так... Спробуйте ще раз, будь ласка! "
+          : "Something went wrong... Please try again!"
+      );
       console.error(error);
     }finally {
         setIsLoading(false);
@@ -52,22 +64,24 @@ export default function ContactForm() {
   return (
     <section id="contact" className="w-full bg-gray-50 py-20">
       <div className="max-w-7xl mx-auto px-4">
-        <h2 className="text-4xl font-bold text-center mb-12">Відправити заявку</h2>
+        <h2 className="text-4xl font-bold text-center mb-12">{lang === 'uk' ? "Відправити заявку" : "Submit an application" }</h2>
         <form onSubmit={handleSubmit} className="max-w-xl mx-auto space-y-6">
         <div>
-            <label className="block text-gray-700 mb-2 font-medium">Ваше імʼя:</label>
+            <label className="block text-gray-700 mb-2 font-medium">{lang === 'uk' ? "Ваше імʼя:": "Your name"} </label>
             <input
               type="text"
               name="name"
               value={formData.name}
               onChange={handleChange}
               className="w-full px-4 py-3 rounded-lg border-gray-200 focus:border-red-500 focus:ring-red-500"
-              placeholder="Введіть ваше імʼя"
+              placeholder={
+                lang === "uk" ? "Введіть ваше імʼя" : "Enter your name"
+              }
               required
             />
           </div>
           <div>
-            <label className="block text-gray-700 mb-2 font-medium">Номер телефону:</label>
+            <label className="block text-gray-700 mb-2 font-medium">{lang === 'uk' ? "Номер телефону" : "Phone number" }:</label>
             <input
               type="tel"
               name="phone"
@@ -79,7 +93,7 @@ export default function ContactForm() {
             />
           </div>
           <div>
-            <label className="block text-gray-700 mb-2 font-medium">Електронна пошта:</label>
+            <label className="block text-gray-700 mb-2 font-medium">{lang === 'uk' ? "Електронна пошта:":"Email"}</label>
             <input
               type="email"
               name="email"
@@ -91,7 +105,7 @@ export default function ContactForm() {
             />
           </div>
           <div>
-            <label className="block text-gray-700 mb-2 font-medium">Номер картки дитини:</label>
+            <label className="block text-gray-700 mb-2 font-medium">{lang === 'uk' ? "Номер картки дитини:": "Child's card number:"}</label>
             <input
               type="number"
               name="cardNumber"
@@ -104,14 +118,18 @@ export default function ContactForm() {
             />
           </div>
           <div>
-            <label className="block text-gray-700 mb-2 font-medium">Коментарі:</label>
+            <label className="block text-gray-700 mb-2 font-medium">{lang === 'uk' ? "Коментарі:": "Comment"}</label>
             <textarea
               name="comments"
               value={formData.comments}
               onChange={handleChange}
               className="w-full px-4 py-3 rounded-lg border-gray-200 focus:border-red-500 focus:ring-red-500"
               rows={4}
-              placeholder="Ваші коментарі або побажання..."
+              placeholder={
+                lang === "uk"
+                  ? "Ваші коментарі або побажання..."
+                  : "Your comments or wishes..."
+              }
             ></textarea>
           </div>
           <button 
@@ -125,13 +143,12 @@ export default function ContactForm() {
               <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
               <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
             </svg>
-            Надсилаємо...
+                {lang === "uk" ? "Надсилаємо..." : "Sending..."}
           </span>
-        ) : 'Надіслати'}
+        ) : (lang === 'uk' ? 'Надіслати' : 'Submit')}
       </button>
         </form>
         {status && <p className="text-center mt-4">{status}</p>}
       </div>
     </section>
-  );
-}
+  );}

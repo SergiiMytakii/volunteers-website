@@ -20,3 +20,15 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 // const analytics = getAnalytics(app);
 export const db = getFirestore(app);
+
+
+
+  //this fetch from firebase (not in use now)
+    // const fetchChildren = async () => {
+    //   const querySnapshot = await getDocs(collection(db, "kids"));
+    //   const children: Child[] = [];
+    //   querySnapshot.forEach((doc) => {
+    //     children.push(doc.data() as Child);
+    //   });
+    //   setChildrenData(children);
+    // };

@@ -1,12 +1,8 @@
-
 import { GoogleSpreadsheet } from 'google-spreadsheet';
 import { JWT } from 'google-auth-library';
 import { SHEET_ID } from '@/app/constants';
 
-
-
 export async function GET() {
-  console.log('Fetching data from Google Sheets...');
   try {
     const serviceAccountAuth = new JWT({
       email: process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL,
@@ -15,26 +11,25 @@ export async function GET() {
     });
     const doc = new GoogleSpreadsheet(SHEET_ID, serviceAccountAuth);
     
-    await doc.loadInfo(); // loads document properties and worksheets
-    await doc.updateProperties({ title: "children data" });
+    await doc.loadInfo();
     
-    const sheet = doc.sheetsByIndex[0]; 
-    const rows = await sheet.getRows(); 
+    const sheet = doc.sheetsByTitle['footer'];
+    const rows = await sheet.getRows();
     const formattedData = rows.map(row => ({
-      id: row.get('id'),
-      name: row.get('name'),
-      nameEn: row.get('nameEn'),
-      age: row.get('age'),
-      dream: row.get('dream'),
-      dreamEn: row.get('dreamEn'),
-      imgSrc: row.get('imgSrc'),
-      fundOpen: row.get('fundOpen') === 'TRUE'
+      lang: row.get('lang'),
+      titleSocial: row.get('title_social'),
+      titleContacts: row.get('title_contacts'),
+      description: row.get('description'),
+      phone: row.get('phone'),
+      rights: row.get('rights'),
+      facebookLink: row.get('facebook_link'),
+      instagramLink: row.get('instagram_link'),
     }));
     return new Response(JSON.stringify({ data: formattedData }), {
       status: 200,
       headers: { 'Content-Type': 'application/json' },
     });
-  } catch (error ) {
+  } catch (error) {
     console.log(error);
     return new Response(JSON.stringify({ error: error}), {
       status: 500,
@@ -42,4 +37,3 @@ export async function GET() {
     });
   }
 }
-

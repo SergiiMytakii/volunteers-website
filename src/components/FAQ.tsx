@@ -34,7 +34,7 @@ export default function FAQ() {
           {currentTranslation?.items.map((item, index) => (
             <div key={index}>
               <h3 className="text-xl font-semibold mb-2">{item.question}</h3>
-              <p className="text-gray-700">{item.answer}</p>
+              <p className="text-gray-700" dangerouslySetInnerHTML={{ __html: item.answer }}></p>
             </div>
           ))}
         </div>
