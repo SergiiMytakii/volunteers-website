@@ -60,6 +60,12 @@ export default function Navigation() {
                 Контакти
               </button>
               <button 
+                onClick={() => scrollToSection('faq')} 
+                className="text-gray-700 hover:text-red-500 transition-colors"
+              >
+                FAQ
+              </button>
+              <button 
               onClick={() => setLang(lang === 'uk' ? 'en' : 'uk')}
               className="text-gray-700 hover:text-red-500 transition-colors"
             >
@@ -112,6 +118,12 @@ export default function Navigation() {
                 className="text-gray-700 hover:text-red-500 transition-colors px-4 py-2 text-left"
               >
                 Контакти
+              </button>
+              <button 
+                onClick={() => scrollToSection('faq')} 
+                className="text-gray-700 hover:text-red-500 transition-colors px-4 py-2 text-left"
+              >
+                FAQ
               </button>
               <button 
               onClick={() => setLang(lang === 'uk' ? 'en' : 'uk')}

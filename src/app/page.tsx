@@ -4,6 +4,8 @@ import About from '@/components/About';
 import HowToHelp from '@/components/HowToHelp';
 import ContactForm from '@/components/ContactForm';
 import ThankYou from '@/components/ThankYou';
+import FAQ from '@/components/FAQ';
+import Footer from '@/components/Footer';
 
 export default function VolunteersPage() {
   return (
@@ -13,7 +15,10 @@ export default function VolunteersPage() {
       <About />
       <HowToHelp />
       <ContactForm />
+      <FAQ/>
       <ThankYou />
+      <Footer />
+
     </div>
   );
 }
