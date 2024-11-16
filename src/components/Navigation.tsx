@@ -69,7 +69,7 @@ export default function Navigation() {
               onClick={() => setLang(lang === 'uk' ? 'en' : 'uk')}
               className="text-gray-700 hover:text-red-500 transition-colors"
             >
-              {lang === 'uk' ? 'EN' : 'UK'}
+              {lang === 'uk' ? 'UK' :'EN'}
             </button>
             </div>
           </div>

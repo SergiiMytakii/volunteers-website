@@ -1,49 +1,42 @@
+'use client';
+
+import { useEffect, useState } from 'react';
+import { useLanguage } from '../app/LanguageContext';
+
+interface FAQItem {
+  question: string;
+  answer: string;
+}
+
+interface Translation {
+  lang: string;
+  title: string;
+  items: FAQItem[];
+}
+
 export default function FAQ() {
+  const { lang } = useLanguage();
+  const [translations, setTranslations] = useState<Translation[]>([]);
+
+  useEffect(() => {
+    fetch('/api/translations/faq')
+      .then(res => res.json())
+      .then(data => setTranslations(data.data));
+  }, []);
+
+  const currentTranslation = translations.find(t => t.lang === lang) || translations[0];
+
   return (
     <section id="faq" className="w-full bg-white py-20">
       <div className="max-w-7xl mx-auto px-4">
-        <h2 className="text-4xl font-bold text-center mb-12">Найчастіші запитання та відповіді:</h2>
+        <h2 className="text-4xl font-bold text-center mb-12">{currentTranslation?.title}</h2>
         <div className="space-y-8 max-w-3xl mx-auto">
-          <div>
-            <h3 className="text-xl font-semibold mb-2">Як обрати подарунок?</h3>
-            <p className="text-gray-700">
-              Ви можете переглянути список дитячих анкет із побажаннями на нашому сайті. Кожна анкета містить інформацію про дитину та її мрію на Різдво. Просто виберіть ту, що вам відгукнеться найбільше, і ми допоможемо вам зробити її особливою!
-              
-            </p>
-          </div>
-          <div>
-            <h3 className="text-xl font-semibold mb-2">Як передати подарунок?</h3>
-            <p className="text-gray-700">
-              Якщо ви замовляєте подарунок онлайн, відразу вкажіть нашу адресу для доставки. 
-            </p>
-            <p className="text-gray-700 font-semibold">
-              Нова Пошта: м.Одеса, 2 відділення, отримувач: Базан Олексій, тел.
-              +380 (67) 274 04 52 <br />
-              Розетка: м.Одеса, 2 відділення, отримувач:
-              Базан Олексій, тел. +380 (67) 274 04 52
-            </p>
-          </div>
-          
-          <div>
-            <h3 className="text-xl font-semibold mb-2">Чи можу я зробити пожертву замість придбання подарунка?</h3>
-            <p className="text-gray-700">
-              Звичайно! Якщо ви не маєте можливості самостійно придбати подарунок, ви можете зробити пожертву, і наша команда подбає про те, щоб мрія дитини здійснилась. Вся сума буде спрямована на придбання бажаного подарунка та організацію його доставки.
-            </p>
-          </div>
-          
-          <div>
-            <h3 className="text-xl font-semibold mb-2">Як відбувається доставка?</h3>
-            <p className="text-gray-700">
-              Ми організовуємо доставку безпосередньо до місця проживання дитини або передаємо подарунок через місцевих координаторів нашого проєкту.
-            </p>
-          </div>
-          
-          <div>
-            <h3 className="text-xl font-semibold mb-2">Чи можу я отримати звіт про використання моїх коштів?</h3>
-            <p className="text-gray-700">
-              Так, прозорість — один із наших пріоритетів. Після завершення акції ми надсилаємо фінансовий звіт про використання коштів усім учасникам. Якщо ви хочете дізнатися, як ваш внесок допоміг, просто залиште свою електронну пошту в контактній формі, і ми надішлемо вам інформацію.
-            </p>
-          </div>
+          {currentTranslation?.items.map((item, index) => (
+            <div key={index}>
+              <h3 className="text-xl font-semibold mb-2">{item.question}</h3>
+              <p className="text-gray-700">{item.answer}</p>
+            </div>
+          ))}
         </div>
       </div>
     </section>
