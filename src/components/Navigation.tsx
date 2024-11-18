@@ -26,7 +26,7 @@ export default function Navigation() {
         <div className="flex justify-between items-center h-16">
           <div className="flex-shrink-0 px-2">
             <div className="flex flex-row gap-4">
-            <button onClick={() => scrollToSection('home')} className="flex items-center">
+            {/* <button onClick={() => scrollToSection('home')} className="flex items-center">
               <Image 
                 src="/logoTransperent.png"
                 alt="Logo"
@@ -34,7 +34,7 @@ export default function Navigation() {
                 height={60}
                 className="object-contain"
               />
-            </button>
+            </button> */}
             <button onClick={() => scrollToSection('home')} className="flex items-center">
               <Image 
                 src="/logoTransperentOrange.png"

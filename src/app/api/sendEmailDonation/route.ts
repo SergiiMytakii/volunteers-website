@@ -1,4 +1,4 @@
-import { ZOHO_EMAIL, ZOHO_SMTP_HOST, ZOHO_SMTP_PORT } from '@/app/constants';
+import {  ADMIN_EMAIL, SENDER_EMAIL, ZOHO_SMTP_HOST, ZOHO_SMTP_PORT } from '@/app/constants';
 import { NextResponse } from 'next/server';
 import nodemailer from 'nodemailer';
 
@@ -11,15 +11,14 @@ export async function POST(req: Request) {
       port: ZOHO_SMTP_PORT,
       secure: false,
       auth: {
-        user: ZOHO_EMAIL,
+        user: SENDER_EMAIL,
         pass: process.env.ZOHO_PASSWORD,
       },
     });
 
     await transporter.sendMail({
-      from: ZOHO_EMAIL,
-      // to: 'bukaskina1989@gmail.com', 
-      to: ZOHO_EMAIL, 
+      from: SENDER_EMAIL,
+      to: ADMIN_EMAIL,
       subject: "Новий донат на подарунок",
       text: `Імʼя: ${name}\nНомер картки дитини: ${cardNumber}\Коментар: ${comments}`,
       html: `
