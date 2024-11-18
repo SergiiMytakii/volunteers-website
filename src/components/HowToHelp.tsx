@@ -100,12 +100,10 @@ const handleDonation = async (formData: DonationFormData) => {
   const scrollToContactWithId = (childId: string, childName: string) => {
     const contactSection = document.getElementById('contact');
     if (contactSection) {
-      window.history.pushState({}, '', `?cardNumber=${childId}#contact`);
-      window.history.pushState({}, "", `?kidName=${childName}#contact`);
+      window.history.pushState({}, '', `?cardNumber=${childId}&kidName=${childName}#contact`);
       contactSection.scrollIntoView({ behavior: 'smooth' });
     }
   };
-
   return (
     <section id="help" className="w-full bg-white py-20">
       <div className="max-w-7xl mx-auto px-4">
