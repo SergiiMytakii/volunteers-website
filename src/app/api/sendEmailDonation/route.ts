@@ -33,5 +33,4 @@ export async function POST(req: Request) {
     console.error(error);
     return NextResponse.json({ error: 'Щось пішло не так... Спробуйте ще раз, будь ласка! ' }, { status: 500 });
   }
-
 }

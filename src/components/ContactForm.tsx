@@ -1,11 +1,10 @@
 'use client';
 
 import { useLanguage } from '@/app/LanguageContext';
+import { useState, useEffect, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { useState, useEffect } from 'react';
 
-
-export default function ContactForm() {
+function ContactFormContent() {
   const searchParams = useSearchParams();
   const { lang } = useLanguage();
   const [formData, setFormData] = useState({
@@ -14,18 +13,20 @@ export default function ContactForm() {
     email: '',
     cardNumber: searchParams.get('cardNumber') || '',
     comments: '',
+    kidName: searchParams.get("kidName") || "",
   });
   const [status, setStatus] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
-
-
-
   useEffect(() => {
     const cardNumber = searchParams.get('cardNumber');
-    console.log('initialCardNumber:', cardNumber);
+    const kidName = searchParams.get('kidName');
+
     if (cardNumber) {
       setFormData(prev => ({ ...prev, cardNumber }));
+    }
+    if (kidName) {
+      setFormData((prev) => ({ ...prev, kidName }));
     }
   }, [searchParams]);
 
@@ -58,6 +59,7 @@ export default function ContactForm() {
             email: '',
             cardNumber: '',
             comments: '',
+          kidName: "",
         });
         setStatus(
           lang == "uk"
@@ -125,6 +127,22 @@ export default function ContactForm() {
             />
           </div>
           <div>
+            <label className="block text-gray-700 mb-2 font-medium">{lang === 'uk' ? "Подарунок для дитини:": "Gift for child:"} </label>
+            <input
+              type="text"
+              name='kidname'
+              value={formData.kidName}
+            
+              className="w-full px-4 py-3 rounded-lg border-gray-200 focus:border-red-500 focus:ring-red-500"
+              placeholder={
+                lang === "uk"
+                  ? "Для якої дитини ви хочете надіслати подарунок"
+                  : "For which child do you want to send a gift"
+              }
+              readOnly
+            />
+          </div>
+          <div>
             <label className="block text-gray-700 mb-2 font-medium">{lang === 'uk' ? "Коментарі:": "Comment"}</label>
             <textarea
               name="comments"
@@ -158,5 +176,13 @@ export default function ContactForm() {
         {status && <p className="text-center mt-4">{status}</p>}
       </div>
     </section>
+  );
+}
+
+export default function ContactForm() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <ContactFormContent />
+    </Suspense>
   );
 }

@@ -97,10 +97,11 @@ const handleDonation = async (formData: DonationFormData) => {
 
   const currentTranslation = translations.find(t => t.lang === lang) || translations[0];
 
-  const scrollToContactWithId = (childId: string) => {
+  const scrollToContactWithId = (childId: string, childName: string) => {
     const contactSection = document.getElementById('contact');
     if (contactSection) {
       window.history.pushState({}, '', `?cardNumber=${childId}#contact`);
+      window.history.pushState({}, "", `?kidName=${childName}#contact`);
       contactSection.scrollIntoView({ behavior: 'smooth' });
     }
   };
@@ -165,7 +166,7 @@ const handleDonation = async (formData: DonationFormData) => {
                   {child.fundOpen ? (
                      <>
                     <button 
-                    onClick={() => scrollToContactWithId(child.id)}
+                    onClick={() => scrollToContactWithId(child.id, child.name)}
                     className="w-1/2 bg-red-500 text-white py-3 rounded-full hover:bg-red-600 transition-colors text-center px-1">
                         {currentTranslation?.giftButton}
                     </button>
