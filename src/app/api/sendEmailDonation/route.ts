@@ -18,7 +18,7 @@ export async function POST(req: Request) {
 
     await transporter.sendMail({
       from: SENDER_EMAIL,
-      to: ADMIN_EMAIL,
+      to: process.env.IS_LOCAL === 'true' ? SENDER_EMAIL : ADMIN_EMAIL, 
       subject: "Новий донат на подарунок",
       text: `Імʼя: ${name}\nНомер картки дитини: ${cardNumber}\Коментар: ${comments}`,
       html: `
@@ -33,4 +33,5 @@ export async function POST(req: Request) {
     console.error(error);
     return NextResponse.json({ error: 'Щось пішло не так... Спробуйте ще раз, будь ласка! ' }, { status: 500 });
   }
+
 }

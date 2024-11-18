@@ -97,10 +97,11 @@ const handleDonation = async (formData: DonationFormData) => {
 
   const currentTranslation = translations.find(t => t.lang === lang) || translations[0];
 
-  const scrollToSection = (elementId: string) => {
-    const element = document.getElementById(elementId);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+  const scrollToContactWithId = (childId: string) => {
+    const contactSection = document.getElementById('contact');
+    if (contactSection) {
+      window.history.pushState({}, '', `?cardNumber=${childId}#contact`);
+      contactSection.scrollIntoView({ behavior: 'smooth' });
     }
   };
 
@@ -156,15 +157,15 @@ const handleDonation = async (formData: DonationFormData) => {
                 </div>
                 <div className="p-6 flex-1 flex flex-col">
                   <div>
-                    <h3 className="text-xl font-semibold mb-2">{lang == 'uk'? child.name : child.nameEn}, {child.age}</h3>
+                    <h3 className="text-xl font-semibold mb-2">{lang == 'uk'? child.name : child.nameEn}, {child.age }  {lang == 'uk'? "років" : "years"}</h3>
                     <p className="text-gray-600 min-h-[3rem] line-clamp-2">{lang == 'uk'?  child.dream : child.dreamEn}</p>
-                    <p className="text-gray-600 min-h-[1rem] line-clamp-2">{currentTranslation?.card}  {child.id}</p>
+                    {/* <p className="text-gray-600 min-h-[1rem] line-clamp-2">{currentTranslation?.card}  {child.id}</p> */}
                   </div>
                   <div className="mt-auto pt-8 flex gap-4">
                   {child.fundOpen ? (
                      <>
                     <button 
-                    onClick={() => scrollToSection("contact")}  
+                    onClick={() => scrollToContactWithId(child.id)}
                     className="w-1/2 bg-red-500 text-white py-3 rounded-full hover:bg-red-600 transition-colors text-center px-1">
                         {currentTranslation?.giftButton}
                     </button>

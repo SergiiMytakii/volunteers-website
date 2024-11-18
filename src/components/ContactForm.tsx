@@ -1,33 +1,33 @@
 'use client';
 
 import { useLanguage } from '@/app/LanguageContext';
-import { useEffect, useState } from 'react';
+import { useSearchParams } from 'next/navigation';
+import { useState, useEffect } from 'react';
+
 
 export default function ContactForm() {
+  const searchParams = useSearchParams();
   const { lang } = useLanguage();
   const [formData, setFormData] = useState({
-    name:'',
+    name: '',
     phone: '',
     email: '',
-    cardNumber: '',
+    cardNumber: searchParams.get('cardNumber') || '',
     comments: '',
   });
   const [status, setStatus] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  const [kidsData, setKidsData] = useState<Array<{id: string, name: string}>>([]);
 
-useEffect(() => {
-  const fetchKidsData = async () => {
-    const response = await fetch('/api/sheets');
-    const data = await response.json();
-    setKidsData(data.data.map((item: { id: string; name: string }) => ({
-      id: item.id,
-      name: item.name
-    })));  };
-  
-  fetchKidsData();
-}, []);
+
+
+  useEffect(() => {
+    const cardNumber = searchParams.get('cardNumber');
+    console.log('initialCardNumber:', cardNumber);
+    if (cardNumber) {
+      setFormData(prev => ({ ...prev, cardNumber }));
+    }
+  }, [searchParams]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -37,9 +37,9 @@ useEffect(() => {
     e.preventDefault();
     setStatus(null);
     setIsLoading(true);
-
+    console.log(formData);
     try {
-      await fetch('/api/submitForm', {
+     fetch('/api/submitForm', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
@@ -76,7 +76,7 @@ useEffect(() => {
           : "Something went wrong... Please try again!"
       );
       console.error(error);
-    }finally {
+    } finally {
         setIsLoading(false);
       }
   };
@@ -86,7 +86,7 @@ useEffect(() => {
       <div className="max-w-7xl mx-auto px-4">
         <h2 className="text-4xl font-bold text-center mb-12">{lang === 'uk' ? "Відправити заявку" : "Submit an application" }</h2>
         <form onSubmit={handleSubmit} className="max-w-xl mx-auto space-y-6">
-        <div>
+          <div>
             <label className="block text-gray-700 mb-2 font-medium">{lang === 'uk' ? "Ваше імʼя:": "Your name"} </label>
             <input
               type="text"
@@ -124,28 +124,6 @@ useEffect(() => {
               required
             />
           </div>
-         <div>
-                <label className="block text-gray-700 mb-2 font-medium">
-                  {lang === 'uk' ? "Номер картки дитини:" : "Child's card number:"}
-                </label>
-                <select
-                    name="cardNumber"
-                    value={formData.cardNumber}
-                    onChange={handleChange}
-                    className="w-full px-4 py-3 rounded-lg border-gray-200 focus:border-red-500 focus:ring-red-500"
-                    required
-                  >
-                    <option value="">
-                      {lang === 'uk' ? "Оберіть номер картки" : "Select card number"}
-                    </option>
-                    {kidsData.map(kid => (
-                      <option key={kid.id} value={kid.id}>
-                        {`${kid.id} - ${kid.name}`}
-                      </option>
-                    ))}
-                  </select>
-            
-          </div>
           <div>
             <label className="block text-gray-700 mb-2 font-medium">{lang === 'uk' ? "Коментарі:": "Comment"}</label>
             <textarea
@@ -162,20 +140,20 @@ useEffect(() => {
             ></textarea>
           </div>
           <button 
-        type="submit" 
-        disabled={isLoading}
-        className="w-full bg-red-500 text-white py-4 rounded-full text-lg font-medium hover:bg-red-600 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed"
-      >
-        {isLoading ? (
-          <span className="flex items-center justify-center">
-            <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-            </svg>
+            type="submit" 
+            disabled={isLoading}
+            className="w-full bg-red-500 text-white py-4 rounded-full text-lg font-medium hover:bg-red-600 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed"
+          >
+            {isLoading ? (
+              <span className="flex items-center justify-center">
+                <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
                 {lang === "uk" ? "Надсилаємо..." : "Sending..."}
-          </span>
-        ) : (lang === 'uk' ? 'Надіслати' : 'Submit')}
-      </button>
+              </span>
+            ) : (lang === 'uk' ? 'Надіслати' : 'Submit')}
+          </button>
         </form>
         {status && <p className="text-center mt-4">{status}</p>}
       </div>
