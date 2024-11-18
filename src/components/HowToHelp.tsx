@@ -62,6 +62,11 @@ export default function HowToHelp() {
   };
 
 const handleDonation = async (formData: DonationFormData) => {
+  fetch('/api/submitDonation', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(formData),
+  });
   fetch('/api/sendEmailDonation', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -145,6 +150,7 @@ const handleDonation = async (formData: DonationFormData) => {
                     src={child.imgSrc} 
                     alt={child.name} 
                     fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                     className="object-cover"
                   />
                 </div>
@@ -159,13 +165,13 @@ const handleDonation = async (formData: DonationFormData) => {
                      <>
                     <button 
                     onClick={() => scrollToSection("contact")}  
-                    className="w-1/2 bg-red-500 text-white py-3 rounded-full hover:bg-red-600 transition-colors text-center">
+                    className="w-1/2 bg-red-500 text-white py-3 rounded-full hover:bg-red-600 transition-colors text-center px-1">
                         {currentTranslation?.giftButton}
                     </button>
                     <button 
                         onClick={() => setActiveCardId(child.id)} 
-                        className="w-1/2 border-2 border-red-500 text-red-500 py-3 rounded-full hover:bg-red-50 transition-colors text-center"
-                        >
+                        className="w-1/2 border-2 border-red-500 text-red-500 py-3 rounded-full hover:bg-red-50 transition-colors text-center px-1">
+                        
                          {currentTranslation?.donateButton}
                         </button>
                         <DonationDialog 

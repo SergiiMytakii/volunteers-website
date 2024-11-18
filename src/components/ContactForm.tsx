@@ -1,7 +1,7 @@
 'use client';
 
 import { useLanguage } from '@/app/LanguageContext';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export default function ContactForm() {
   const { lang } = useLanguage();
@@ -15,7 +15,21 @@ export default function ContactForm() {
   const [status, setStatus] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const [kidsData, setKidsData] = useState<Array<{id: string, name: string}>>([]);
+
+useEffect(() => {
+  const fetchKidsData = async () => {
+    const response = await fetch('/api/sheets');
+    const data = await response.json();
+    setKidsData(data.data.map((item: { id: string; name: string }) => ({
+      id: item.id,
+      name: item.name
+    })));  };
+  
+  fetchKidsData();
+}, []);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
@@ -25,6 +39,12 @@ export default function ContactForm() {
     setIsLoading(true);
 
     try {
+      await fetch('/api/submitForm', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
+
       const response = await fetch('/api/sendEmail', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -48,7 +68,7 @@ export default function ContactForm() {
         setStatus(lang == "uk"
             ? "Щось пішло не так... Спробуйте ще раз, будь ласка! "
             : "Something went wrong... Please try again!"
-        );;
+        );
       }
     } catch (error) {
       setStatus(lang == "uk"
@@ -104,18 +124,27 @@ export default function ContactForm() {
               required
             />
           </div>
-          <div>
-            <label className="block text-gray-700 mb-2 font-medium">{lang === 'uk' ? "Номер картки дитини:": "Child's card number:"}</label>
-            <input
-              type="number"
-              name="cardNumber"
-              value={formData.cardNumber}
-              onChange={handleChange}
-              className="w-full px-4 py-3 rounded-lg border-gray-200 focus:border-red-500 focus:ring-red-500"
-              placeholder="001, 002, 003..."
-              min="001"
-              required
-            />
+         <div>
+                <label className="block text-gray-700 mb-2 font-medium">
+                  {lang === 'uk' ? "Номер картки дитини:" : "Child's card number:"}
+                </label>
+                <select
+                    name="cardNumber"
+                    value={formData.cardNumber}
+                    onChange={handleChange}
+                    className="w-full px-4 py-3 rounded-lg border-gray-200 focus:border-red-500 focus:ring-red-500"
+                    required
+                  >
+                    <option value="">
+                      {lang === 'uk' ? "Оберіть номер картки" : "Select card number"}
+                    </option>
+                    {kidsData.map(kid => (
+                      <option key={kid.id} value={kid.id}>
+                        {`${kid.id} - ${kid.name}`}
+                      </option>
+                    ))}
+                  </select>
+            
           </div>
           <div>
             <label className="block text-gray-700 mb-2 font-medium">{lang === 'uk' ? "Коментарі:": "Comment"}</label>
@@ -151,4 +180,5 @@ export default function ContactForm() {
         {status && <p className="text-center mt-4">{status}</p>}
       </div>
     </section>
-  );}
+  );
+}
