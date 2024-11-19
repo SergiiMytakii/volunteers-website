@@ -14,7 +14,7 @@ interface Translation {
 }
 
 export default function Hero() {
-  const { lang} = useLanguage();
+  const { lang } = useLanguage();
   const scrollToSection = (elementId: string) => {
     const element = document.getElementById(elementId);
     if (element) {
@@ -49,13 +49,15 @@ export default function Hero() {
           <div className="text-left">
             <h1 className="text-5xl font-bold">{currentTranslation?.header}</h1>
           </div>
-          <div className="flex flex-col items-start">
-            <p className="text-2xl mb-4 max-w-2xl">
-              {currentTranslation?.title}
-            </p>
-            <p className="text-1xl mb-8 max-w-2xl text-left">
-              {currentTranslation?.description}
-            </p>
+          <div className="flex flex-col items-start text-left w-full">
+
+            <p className="text-2xl mb-4 max-w-2xl" dangerouslySetInnerHTML={{ __html: currentTranslation?.title || '' }} />
+            <div className="text-left self-start w-full description-container">
+              <p
+                className="text-left text-1xl mb-8 max-w-2xl"
+                dangerouslySetInnerHTML={{ __html: currentTranslation?.description || '' }}
+              />
+            </div>
             {currentTranslation?.button && (
               <button 
                 onClick={() => scrollToSection('help')} 

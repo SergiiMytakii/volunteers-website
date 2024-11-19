@@ -108,8 +108,8 @@ const handleDonation = async (formData: DonationFormData) => {
     <section id="help" className="w-full bg-white py-20">
       <div className="max-w-7xl mx-auto px-4">
         <h2 className="text-4xl font-bold text-center mb-12">{currentTranslation?.title}</h2>
-        <div className="max-w-3xl mx-auto text-lg text-gray-700 text-center">
-          <p className="mb-8">{currentTranslation?.description}</p>
+        <div className="max-w-3xl mx-auto text-lg text-gray-700 text-center margin-bottom">
+          <p className="mb-8"  dangerouslySetInnerHTML={{ __html: currentTranslation?.description || '' }} ></p>
           {/* <a href="#contact" className="bg-red-500 text-white px-8 py-4 rounded-full hover:bg-red-600 transition-colors inline-block">
             Зробити подарунок
           </a> */}

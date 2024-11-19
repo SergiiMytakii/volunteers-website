@@ -47,13 +47,19 @@ export default function About() {
               {currentTranslation?.title}
             </h4>
 
-            <h3 className="text-1xl font-semibold mb-6">
-              {currentTranslation?.subtitle}
-            </h3>
+            <div className="text-left self-start w-full description-container font-semibold mb-6">
+              <p
+                className="text-left text-1xl mb-8 max-w-2xl"
+                dangerouslySetInnerHTML={{ __html: currentTranslation?.subtitle || '' }}
+              />
+            </div>
 
-            <p className="mb-6">
-              {currentTranslation?.description}
-            </p>
+            <div className="text-left self-start w-full description-container">
+              <p
+                className="text-left text-1xl mb-8 max-w-2xl"
+                dangerouslySetInnerHTML={{ __html: currentTranslation?.description || '' }}
+              />
+            </div>
 
             <div className="flex flex-col gap-8 md:flex-row md:gap-8 text-center">
               <div className="text-purple-700 text-3xl font-bold">

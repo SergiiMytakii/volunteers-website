@@ -49,4 +49,12 @@ body {
   .submit-button {
     @apply mt-4 bg-[#d9534f] text-white cursor-pointer border-none rounded-md hover:bg-[#c9302c];
   }
+
+  .description-container p {
+    text-align: left;
+    margin-bottom: 1rem; 
+  }
+  .margin-bottom p {
+    margin-bottom: 1rem; 
+  }
 }
