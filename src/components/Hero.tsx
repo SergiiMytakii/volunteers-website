@@ -3,7 +3,9 @@
 import { useEffect, useState } from 'react';
 import { useLanguage } from '../app/LanguageContext';
 import Image from 'next/image';
-
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 interface Translation {
   lang: string;
@@ -13,8 +15,15 @@ interface Translation {
   button: string;
 }
 
+interface HeroImage {
+  url: string;
+  alt: string;
+}
+
 export default function Hero() {
   const { lang } = useLanguage();
+  const [heroImages, setHeroImages] = useState<HeroImage[]>([]);
+
   const scrollToSection = (elementId: string) => {
     const element = document.getElementById(elementId);
     if (element) {
@@ -24,26 +33,57 @@ export default function Hero() {
   const [translations, setTranslations] = useState<Translation[]>([]);
 
   useEffect(() => {
+    fetch('/api/images/hero')
+      .then(res => res.json())
+      .then(data => {
+        if (data.images) {
+          setHeroImages(data.images);
+        }
+      });
+  }, []);
+
+  useEffect(() => {
     fetch('/api/translations/hero')
       .then(res => res.json())
       .then(data => setTranslations(data.data));
   }, []);
 
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 600,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 4000,
+    fade: false,
+    cssEase: "linear"
+  };
+
   const currentTranslation = translations.find(t => t.lang === lang) || translations[0];
   return (
-    <header id="home" className="w-full h-screen bg-cover bg-center relative mt-16" >
-       <div className="absolute inset-0">
-        <Image
-          src="https://firebasestorage.googleapis.com/v0/b/cherch-od2024.firebasestorage.app/o/volunteers-website-assets%2Fphoto_2024-11-12%2017.40.58.jpeg?alt=media&token=4b8b9d93-85e6-46a5-af8e-f253a16e8950"
-          alt="Hero background"
-          fill
-          priority
-          sizes="100vw"
-          style={{ objectFit: 'cover' }}
-        />
-        <div className="absolute inset-0"></div>
+    <header id="home" className="w-full h-screen bg-cover bg-center relative mt-16 overflow-hidden">
+      <div className="absolute inset-0">
+        <Slider {...settings}>
+          {heroImages.map((image, index) => (
+            <div key={index} className="relative w-screen h-[100vh]">
+              <Image
+                src={image.url}
+                alt={image.alt}
+                fill
+                priority
+                sizes="100vw"
+                quality={75}
+                style={{ 
+                  objectFit: 'cover',
+                  objectPosition: 'center'
+                }}
+              />
+            </div>
+          ))}
+        </Slider>
       </div>
-      <div className="absolute inset-0 bg-black/50"></div>
+      <div className="absolute inset-0 bg-black/20"></div>
       <div className="relative z-10 max-w-7xl mx-auto h-full flex items-center text-white px-4">
         <div className="grid grid-cols-1 md:grid-cols-2 w-full gap-8 items-center">
           <div className="text-left">
