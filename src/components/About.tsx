@@ -15,14 +15,28 @@ interface Translation {
   statsWaitingLabel: string;
 }
 
+interface AboutImage {
+  url: string;
+  alt: string;
+}
+
 export default function About() {
   const { lang } = useLanguage();
   const [translations, setTranslations] = useState<Translation[]>([]);
+  const [aboutImage, setAboutImage] = useState<AboutImage | null>(null);
 
   useEffect(() => {
     fetch('/api/translations/about')
       .then(res => res.json())
       .then(data => setTranslations(data.data));
+
+      fetch('/api/images/about')
+      .then(res => res.json())
+      .then(data => {
+        if (data.images && data.images.length > 0) {
+          setAboutImage(data.images[0]);
+        }
+      });
   }, []);
 
   const currentTranslation = translations.find(t => t.lang === lang) || translations[0];
@@ -33,12 +47,18 @@ export default function About() {
         <div className="flex flex-col md:flex-row gap-8 items-center relative h-full">
           <div className="w-full md:w-1/2 relative h-[400px] md:-ml-6">
             <div className="absolute bottom-0 left-0 w-full h-[400px]">
-              <Image 
-                src="https://firebasestorage.googleapis.com/v0/b/cherch-od2024.firebasestorage.app/o/volunteers-website-assets%2FScreenshot%202024-11-12%20at%2018.58.32.png?alt=media&token=31461abd-7a42-47f9-be9e-2ccc9e7004b7"
-                alt="Volunteers Project"
+            {aboutImage && (
+                <Image 
+                src={aboutImage.url}
+                alt={aboutImage.alt}
                 fill
-                className="object-cover"
-              />
+                sizes="(max-width: 768px) 100vw, 50vw"
+                style={{ 
+                  objectFit: 'contain', // Changed to contain to show whole image
+                  objectPosition: 'center'
+                }}
+                />
+              )}
             </div>
           </div>
 
