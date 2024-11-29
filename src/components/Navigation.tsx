@@ -18,7 +18,20 @@ export default function Navigation() {
     }
   };
 
-  
+  const menuItems: { [key: string]: { about: string; help: string; contact: string; faq: string } } = {
+    uk: {
+      about: 'Про проєкт',
+      help: 'Як допомогти',
+      contact: 'Контакти',
+      faq: 'FAQ'
+    },
+    en: {
+      about: 'About',
+      help: 'How to Help',
+      contact: 'Contact',
+      faq: 'FAQ'
+    }
+  };
 
   return (
     <nav className="w-full bg-white shadow-md fixed top-0 z-50">
@@ -26,27 +39,9 @@ export default function Navigation() {
         <div className="flex justify-between items-center h-16">
           <div className="flex-shrink-0 px-2">
             <div className="flex flex-row gap-4">
-            {/* <button onClick={() => scrollToSection('home')} className="flex items-center">
-              <Image 
-                src="/logoTransperent.png"
-                alt="Logo"
-                width={60}
-                height={60}
-                className="object-contain"
-              />
-            </button> */}
             <button onClick={() => scrollToSection('home')} className="flex items-center">
               <Image 
                 src="/logoTransperentOrange.png"
-                alt="Logo"
-                width={60}
-                height={60}
-                className="object-contain"
-              />
-            </button>
-            <button onClick={() => scrollToSection('home')} className="flex items-center">
-              <Image 
-                src="/logoTransperent.png"
                 alt="Logo"
                 width={60}
                 height={60}
@@ -63,32 +58,32 @@ export default function Navigation() {
                 onClick={() => scrollToSection('about')} 
                 className="text-gray-700 hover:text-red-500 transition-colors"
               >
-                Про проєкт
+                {menuItems[lang].about}
               </button>
               <button 
                 onClick={() => scrollToSection('help')} 
                 className="text-gray-700 hover:text-red-500 transition-colors"
               >
-                Як допомогти
+                {menuItems[lang].help}
               </button>
               <button 
                 onClick={() => scrollToSection('contact')} 
                 className="text-gray-700 hover:text-red-500 transition-colors"
               >
-                Контакти
+                {menuItems[lang].contact}
               </button>
               <button 
                 onClick={() => scrollToSection('faq')} 
                 className="text-gray-700 hover:text-red-500 transition-colors"
               >
-                FAQ
+                {menuItems[lang].faq}
               </button>
               <button 
-              onClick={() => setLang(lang === 'uk' ? 'en' : 'uk')}
-              className="text-gray-700 hover:text-red-500 transition-colors"
-            >
-              {lang === 'uk' ? 'UK' :'EN'}
-            </button>
+                onClick={() => setLang(lang === 'uk' ? 'en' : 'uk')}
+                className="text-gray-700 hover:text-red-500 transition-colors"
+              >
+                {lang === 'uk' ? 'UK' : 'EN'}
+              </button>
             </div>
           </div>
 
@@ -123,25 +118,25 @@ export default function Navigation() {
                 onClick={() => scrollToSection('about')} 
                 className="text-gray-700 hover:text-red-500 transition-colors px-4 py-2 text-left"
               >
-                Про проєкт
+                {menuItems[lang].about}
               </button>
               <button 
                 onClick={() => scrollToSection('help')} 
                 className="text-gray-700 hover:text-red-500 transition-colors px-4 py-2 text-left"
               >
-                Як допомогти
+                {menuItems[lang].help}
               </button>
               <button 
                 onClick={() => scrollToSection('contact')} 
                 className="text-gray-700 hover:text-red-500 transition-colors px-4 py-2 text-left"
               >
-                Контакти
+                {menuItems[lang].contact}
               </button>
               <button 
                 onClick={() => scrollToSection('faq')} 
                 className="text-gray-700 hover:text-red-500 transition-colors px-4 py-2 text-left"
               >
-                FAQ
+                {menuItems[lang].faq}
               </button>
               <button 
               onClick={() => setLang(lang === 'uk' ? 'en' : 'uk')}

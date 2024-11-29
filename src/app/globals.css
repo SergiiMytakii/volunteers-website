@@ -57,4 +57,18 @@ body {
   .margin-bottom p {
     margin-bottom: 1rem; 
   }
+
+  .swiper-pagination-bullet {
+    margin: 0 2px !important;
+    transform: scale(0.8);
+  }
+  
+  .swiper-pagination {
+    display: flex;
+    justify-content: center;
+  }
+  
+  
+
+  
 }

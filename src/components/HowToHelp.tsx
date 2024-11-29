@@ -108,11 +108,8 @@ const handleDonation = async (formData: DonationFormData) => {
     <section id="help" className="w-full bg-white py-20">
       <div className="max-w-7xl mx-auto px-4">
         <h2 className="text-4xl font-bold text-center mb-12">{currentTranslation?.title}</h2>
-        <div className="max-w-3xl mx-auto text-lg text-gray-700 text-center margin-bottom">
-          <p className="mb-8"  dangerouslySetInnerHTML={{ __html: currentTranslation?.description || '' }} ></p>
-          {/* <a href="#contact" className="bg-red-500 text-white px-8 py-4 rounded-full hover:bg-red-600 transition-colors inline-block">
-            Зробити подарунок
-          </a> */}
+        <div className="max-w-3xl mx-auto text-lg text-gray-700 margin-bottom">
+          <p className="mb-8 text-left" dangerouslySetInnerHTML={{ __html: currentTranslation?.description || '' }}></p>
         </div>
         <Swiper
           modules={[Navigation, Pagination, A11y]}
@@ -143,21 +140,24 @@ const handleDonation = async (formData: DonationFormData) => {
           className="mt-12 relative !pb-12"
         >
           {childrenData.map((child) => (
-            <SwiperSlide key={child.id} className="h-[600px] pb-4 ">
+            <SwiperSlide key={child.id} className="h-[850px] pb-4 ">
               <div className="bg-white rounded-lg shadow-lg overflow-hidden">
-                <div className="h-[300px] relative">
-                  <Image 
-                    src={child.imgSrc} 
-                    alt={child.name} 
-                    fill
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    className="object-cover"
-                  />
+                <div className="h-[550px] relative">
+                {child.imgSrc && child.imgSrc.trim() !== "" && (
+                    <Image 
+                      src={child.imgSrc} 
+                      alt={child.name} 
+                      fill
+                      priority={true}
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                      className="object-cover"
+                    />
+                  )}
                 </div>
                 <div className="p-6 flex-1 flex flex-col">
                   <div>
                     <h3 className="text-xl font-semibold mb-2">{lang == 'uk'? child.name : child.nameEn}, {child.age }  {lang == 'uk'? "років" : "years"}</h3>
-                    <p className="text-gray-600 min-h-[3rem] line-clamp-2">{lang == 'uk'?  child.dream : child.dreamEn}</p>
+                    <p className="text-gray-600 min-h-[4.5rem] line-clamp-3">{lang == 'uk'?  child.dream : child.dreamEn}</p>
                     {/* <p className="text-gray-600 min-h-[1rem] line-clamp-2">{currentTranslation?.card}  {child.id}</p> */}
                   </div>
                   <div className="mt-auto pt-8 flex gap-4">
@@ -173,15 +173,7 @@ const handleDonation = async (formData: DonationFormData) => {
                         className="w-1/2 border-2 border-red-500 text-red-500 py-3 rounded-full hover:bg-red-50 transition-colors text-center px-1">
                         
                          {currentTranslation?.donateButton}
-                        </button>
-                        <DonationDialog 
-                              isOpen={activeCardId === child.id}
-                              onClose={() => setActiveCardId(null)}
-                            onConfirm={handleDonation}
-                            cardNumber={child.id}
-                          kidName={lang == "uk" ? child.name : child.nameEn}
-                          />
-                        
+                    </button>
                           </>
                     ) : (
                         <div className="w-full text-center py-3 bg-gray-200 rounded-full text-gray-600">
@@ -198,6 +190,15 @@ const handleDonation = async (formData: DonationFormData) => {
         <div className="swiper-pagination"></div>
         </Swiper>
       </div>
+      {activeCardId && (
+        <DonationDialog 
+          isOpen={!!activeCardId}
+          onClose={() => setActiveCardId(null)}
+          onConfirm={handleDonation}
+          cardNumber={activeCardId}
+          kidName={childrenData.find(child => child.id === activeCardId)?.name || ''}
+        />
+      )}
     </section>
   );
 }

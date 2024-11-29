@@ -42,12 +42,12 @@ export default function About() {
   const currentTranslation = translations.find(t => t.lang === lang) || translations[0];
 
   return (
-    <section id="about" className="w-full bg-pink-50 py-20">
+    <section id="about" className="w-full bg-grey-50 py-20">
       <div className="max-w-7xl mx-auto px-4 h-full">
         <div className="flex flex-col md:flex-row gap-8 items-center relative h-full">
-          <div className="w-full md:w-1/2 relative h-[400px] md:-ml-6">
-            <div className="absolute bottom-0 left-0 w-full h-[400px]">
-            {aboutImage && (
+          <div className="w-full md:w-1/2 relative h-[500px] md:-ml-8">
+            <div className="absolute bottom-0 left-0 w-full h-[500px]">
+            {aboutImage  && aboutImage.url.trim() !== "" && (
                 <Image 
                 src={aboutImage.url}
                 alt={aboutImage.alt}

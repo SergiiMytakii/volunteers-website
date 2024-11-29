@@ -18,7 +18,7 @@ export async function GET() {
     await doc.loadInfo(); // loads document properties and worksheets
     await doc.updateProperties({ title: "children data" });
     
-    const sheet = doc.sheetsByIndex[0]; 
+    const sheet = doc.sheetsByTitle['cards']; 
     const rows = await sheet.getRows(); 
     const formattedData = rows.map(row => ({
       id: row.get('id'),

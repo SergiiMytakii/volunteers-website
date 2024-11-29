@@ -15,7 +15,7 @@ export async function POST(request: Request) {
     const doc = new GoogleSpreadsheet(SHEET_ID, serviceAccountAuth);
     await doc.loadInfo();
     
-    const sheet = doc.sheetsByIndex[0];
+    const sheet = doc.sheetsByTitle['cards'];
     const rows = await sheet.getRows();
     
     const targetRow = rows.find(row => row.get('id') === formData.cardNumber);

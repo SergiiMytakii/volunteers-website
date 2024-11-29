@@ -38,7 +38,7 @@ export default function DonationDialog({ isOpen, onClose, onConfirm, cardNumber,
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" role="dialog" aria-modal="true">
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center select-none  z-50" role="dialog" aria-modal="true">
       <div className="bg-white rounded-lg p-6 max-w-sm w-full m-4">
         <h2 className="text-xl font-bold mb-4">{lang === 'uk' ? "Допомогти дитині:" : "Help to: "} {kidName}</h2>
         <form onSubmit={handleSubmit} className="space-y-4">

@@ -14,8 +14,8 @@ const montserrat = Montserrat({
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   const { lang } = useLanguage();
   return (
-    <html lang={lang} className={montserrat.className}>
-      <body>
+    <html lang={lang} className={montserrat.className} suppressHydrationWarning>
+      <body suppressHydrationWarning>
         <LanguageProvider>
           {children}
         </LanguageProvider>

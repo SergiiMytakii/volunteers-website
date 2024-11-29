@@ -16,7 +16,7 @@ export async function GET() {
         };
       })
     );
-    return NextResponse.json({ images: imageUrls });
+    return NextResponse.json({ images: imageUrls.reverse() });
   } catch (error) {
     console.log(error);
     return NextResponse.json({ error: 'Failed to fetch images' }, { status: 500 });

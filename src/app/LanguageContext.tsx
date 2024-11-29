@@ -17,7 +17,7 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     const browserLang = navigator.language.toLowerCase();
-    const detectedLang = browserLang.startsWith('uk') ? 'uk' : 'en';
+    const detectedLang = browserLang.startsWith('en') ? 'en' : 'uk';
     setLang(detectedLang);
   }, []);
 
