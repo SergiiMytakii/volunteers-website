@@ -12,6 +12,7 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import { MONO_JAR_LINK,} from "@/app/constants";
 import { useLanguage } from "@/app/LanguageContext";
+import { Virtual } from 'swiper/modules';
 
 interface Child {
   id: string;
@@ -38,28 +39,44 @@ export default function HowToHelp() {
   const [childrenData, setChildrenData] = useState<Child[]>([]);
   const prevRef = useRef<HTMLDivElement>(null);
   const nextRef = useRef<HTMLDivElement>(null);
+  const [page, setPage] = useState(1);
+  const itemsPerPage = 6;
+  const [isLoading, setIsLoading] = useState(false);
+
 
   const [activeCardId, setActiveCardId] = useState<string | null>(null);
 
   const { lang } = useLanguage();
   const [translations, setTranslations] = useState<Translation[]>([]);
 
-  const fetchChildrenData = async () => {
-   try {
-     const response = await fetch('/api/sheets', {
-      method: "GET"
-     });
-     if (!response.ok) {
-      console.error('Failed to fetch Google Sheet data');
+  const fetchChildrenData = async (pageNum: number) => {
+    try {
+      const response = await fetch(`/api/sheets?page=${pageNum}&limit=${itemsPerPage}`, {
+        method: "GET"
+      });
+      if (!response.ok) {
+        console.error('Failed to fetch Google Sheet data');
+      }
+      const {data} = await response.json();
+      return data;
+    } catch (error) {
+      console.error('Error fetching Google Sheet data:', error);
+      return null;
     }
-    
-    const { data } = await response.json();
-    return data;
-   } catch (error) {
-   console.error('Error fetching Google Sheet data:', error);
-    return null;
-   }
   };
+
+  const loadMore = async () => {
+    if (isLoading) return;
+    setIsLoading(true);
+    const nextPage = page + 1;
+    const newData = await fetchChildrenData(nextPage);
+    if (newData) {
+      setChildrenData(prev => [...prev, ...newData]);
+      setPage(nextPage);
+    }
+    setIsLoading(false);
+  };
+  
 
 const handleDonation = async (formData: DonationFormData) => {
   fetch('/api/submitDonation', {
@@ -86,7 +103,7 @@ const handleDonation = async (formData: DonationFormData) => {
       .then(data => setTranslations(data.data));
 
     const fetchData = async () => {
-      const children = await fetchChildrenData();
+      const children = await fetchChildrenData(1);
       if(children)
       setChildrenData(children);
     };
@@ -112,7 +129,11 @@ const handleDonation = async (formData: DonationFormData) => {
           <p className="mb-8 text-left" dangerouslySetInnerHTML={{ __html: currentTranslation?.description || '' }}></p>
         </div>
         <Swiper
-          modules={[Navigation, Pagination, A11y]}
+            modules={[Navigation, Pagination, A11y, Virtual]}
+            virtual
+            onReachEnd={loadMore}
+            observer={true}
+            observeParents={true}
           spaceBetween={30}
           slidesPerView={1}
           navigation={{
@@ -131,16 +152,15 @@ const handleDonation = async (formData: DonationFormData) => {
               swiper.navigation.init();
               swiper.navigation.update();
             }
-          }}          observer={true}
-          observeParents={true}
+          }}          
           breakpoints={{
             640: { slidesPerView: 2 },
             1024: { slidesPerView: 3 }
           }}
           className="mt-12 relative !pb-12"
         >
-          {childrenData.map((child) => (
-            <SwiperSlide key={child.id} className="h-[850px] pb-4 ">
+          {childrenData.map((child, index) => (
+            <SwiperSlide key={child.id} virtualIndex={index} className="h-[850px] pb-4 ">
               <div className="bg-white rounded-lg shadow-lg overflow-hidden">
                 <div className="h-[550px] relative">
                 {child.imgSrc && child.imgSrc.trim() !== "" && (
@@ -188,7 +208,15 @@ const handleDonation = async (formData: DonationFormData) => {
         <div ref={prevRef} className="swiper-button-prev"></div>
         <div ref={nextRef} className="swiper-button-next"></div>
         <div className="swiper-pagination"></div>
+        
+        {isLoading && (
+          <div className="absolute inset-0 bg-white/80 flex items-center justify-center z-[999]">
+            <div className="w-12 h-12 border-4 border-red-500 border-t-transparent rounded-full animate-spin" />
+          </div>
+        )}
         </Swiper>
+    
+     
       </div>
       {activeCardId && (
         <DonationDialog 

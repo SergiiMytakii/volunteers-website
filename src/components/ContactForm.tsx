@@ -11,9 +11,9 @@ function ContactFormContent() {
     name: '',
     phone: '',
     email: '',
-    cardNumber: searchParams.get('cardNumber') || '',
+    cardNumber: '',
     comments: '',
-    kidName: searchParams.get("kidName") || "",
+    kidName:  "",
   });
   const [status, setStatus] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -21,12 +21,13 @@ function ContactFormContent() {
   useEffect(() => {
     const cardNumber = searchParams.get('cardNumber');
     const kidName = searchParams.get('kidName');
-
-    if (cardNumber) {
-      setFormData(prev => ({ ...prev, cardNumber }));
-    }
-    if (kidName) {
-      setFormData((prev) => ({ ...prev, kidName }));
+    const hasHash = window.location.hash === '#contact';
+    if (cardNumber && kidName && hasHash) {
+      setFormData(prev => ({
+        ...prev,
+        cardNumber,
+        kidName
+      }));
     }
   }, [searchParams]);
 
