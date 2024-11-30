@@ -200,7 +200,7 @@ const handleDonation = async (formData: DonationFormData) => {
                        {currentTranslation?.closedLabel}
                         </div>
                     )}
-                                        </div>
+                  </div>
                 </div>
               </div>
             </SwiperSlide>
