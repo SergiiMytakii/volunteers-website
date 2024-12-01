@@ -10,10 +10,8 @@ export async function GET(request: Request) {
   try {
     const { searchParams } = new URL(request.url);
     const page = parseInt(searchParams.get('page') || '1');
-    console.log('page: ' , page)
     const limit = parseInt(searchParams.get('limit') || '6');
     const startRow = (page - 1) * limit;
-    console.log("startRow : " , startRow)
 
 
 
@@ -43,7 +41,11 @@ export async function GET(request: Request) {
       dreamEn: row.get('dreamEn'),
       imgSrc: row.get('imgSrc'),
       fundOpen: row.get('fundOpen') === 'TRUE'
-    }));
+    }))
+    .sort((a, b) => {
+      if (a.fundOpen === b.fundOpen) return 0;
+      return a.fundOpen ? -1 : 1;
+    });
 
     // Return paginated data
     return new Response(JSON.stringify({ 
