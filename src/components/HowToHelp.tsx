@@ -66,7 +66,8 @@ export default function HowToHelp() {
   };
 
   const loadMore = async () => {
-    if (isLoading) return;
+    if (isLoading || childrenData.length === 0) return;
+    
     setIsLoading(true);
     const nextPage = page + 1;
     const newData = await fetchChildrenData(nextPage);
@@ -76,6 +77,8 @@ export default function HowToHelp() {
     }
     setIsLoading(false);
   };
+  
+  
   
 
 const handleDonation = async (formData: DonationFormData) => {
@@ -171,6 +174,9 @@ const handleDonation = async (formData: DonationFormData) => {
                       priority={true}
                       sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                       className="object-cover"
+                      onError={(e) => {
+                        e.currentTarget.src = '/logoTransparentOrange.png'
+                      }}
                     />
                   )}
                 </div>

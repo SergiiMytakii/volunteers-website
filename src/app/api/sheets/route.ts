@@ -10,8 +10,11 @@ export async function GET(request: Request) {
   try {
     const { searchParams } = new URL(request.url);
     const page = parseInt(searchParams.get('page') || '1');
+    console.log('page: ' , page)
     const limit = parseInt(searchParams.get('limit') || '6');
-    const startRow = Math.max(2, (page - 1) * limit + 2)
+    const startRow = (page - 1) * limit;
+    console.log("startRow : " , startRow)
+
 
 
     const serviceAccountAuth = new JWT({
@@ -22,12 +25,12 @@ export async function GET(request: Request) {
     const doc = new GoogleSpreadsheet(SHEET_ID, serviceAccountAuth);
     
     await doc.loadInfo(); // loads document properties and worksheets
-    await doc.updateProperties({ title: "children data" });
+    // await doc.updateProperties({ title: "children data" });
     
     const sheet = doc.sheetsByTitle['cards']; 
     
     const rows = await sheet.getRows({ 
-      offset: startRow - 2,
+      offset: startRow,
       limit: limit 
     });
     
