@@ -36,14 +36,14 @@ export default function FAQ() {
     <section id="faq" className="w-full bg-white py-20">
       <div className="max-w-7xl mx-auto px-4">
         <h2 className="text-4xl font-bold text-center mb-12">{currentTranslation?.title}</h2>
-        <div className="space-y-4 max-w-3xl mx-auto">
+        <div className="space-y-4 max-w-3xl mx-auto  " >
           {currentTranslation?.items.map((item, index) => (
-            <div key={index} className="border rounded-lg overflow-hidden">
+            <div key={index} className="border rounded-lg overflow-hidden  text-left">
               <button
                 onClick={() => toggleAnswer(index)}
                 className="w-full px-6 py-4 text-left flex justify-between items-center hover:bg-gray-50"
               >
-                <h3 className="text-xl font-semibold">{item.question}</h3>
+                <h3 className="text-xl font-semibold text-left" >{item.question}</h3>
                 <svg
                   className={`w-6 h-6 transform transition-transform ${
                     openIndex === index ? 'rotate-180' : ''
@@ -66,7 +66,7 @@ export default function FAQ() {
                 } overflow-hidden`}
               >
                 <p
-                  className="px-6 py-4 text-gray-700"
+                  className="px-6 py-4 text-gray-700 text-left"
                   dangerouslySetInnerHTML={{ __html: item.answer }}
                 ></p>
               </div>

@@ -74,7 +74,7 @@ export default function Footer() {
 
         {/* Copyright */}
         <div className="mt-12 pt-4 border-t border-gray-200 text-gray-500">
-          <p>{currentTranslation?.rights}</p>
+          <p>{currentTranslation?.rights} | {lang == 'uk'? "Помощь в создании сайта: " : " Created by "}<a href="mailto:serjmitaki@gmail.com" className="hover:text-red-500 transition-colors">{lang === 'uk'? "Сергій Митакій":'Sergii Mytakii'}</a></p>          
         </div>
       </div>
     </footer>
