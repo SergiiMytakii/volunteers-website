@@ -69,7 +69,7 @@ export default function Hero() {
   const currentTranslation = translations.find(t => t.lang === lang) || translations[0];
 
   const LoadingOverlay = () => (
-    <div className="absolute inset-0 flex items-center justify-center bg-white">
+    <div className="absolute inset-0 flex items-start justify-center bg-gray-150 pt-40">
       <div className="animate-spin">
         <Image 
           src="/logoTransperentOrange.png"
