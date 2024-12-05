@@ -6,6 +6,7 @@ import ContactForm from '@/components/ContactForm';
 import ThankYou from '@/components/ThankYou';
 import FAQ from '@/components/FAQ';
 import Footer from '@/components/Footer';
+import ChatWidget from '@/components/ChatWidget';
 
 export default function VolunteersPage() {
   return (
@@ -18,6 +19,7 @@ export default function VolunteersPage() {
       <FAQ/>
       <ThankYou />
       <Footer />
+      <ChatWidget />
 
     </div>
   );
