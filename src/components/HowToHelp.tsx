@@ -40,7 +40,7 @@ export default function HowToHelp() {
   const prevRef = useRef<HTMLDivElement>(null);
   const nextRef = useRef<HTMLDivElement>(null);
   const [page, setPage] = useState(1);
-  const itemsPerPage = 6;
+  const itemsPerPage = 66;
   const [isLoading, setIsLoading] = useState(false);
 
 
@@ -171,7 +171,8 @@ const handleDonation = async (formData: DonationFormData) => {
                       src={child.imgSrc} 
                       alt={child.name} 
                       fill
-                      priority={true}
+                      loading="lazy" // Add this
+                      priority={false} 
                       sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                       className="object-cover"
                       onError={(e) => {

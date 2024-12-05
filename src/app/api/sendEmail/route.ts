@@ -32,6 +32,26 @@ export async function POST(req: Request) {
     `,
     });
 
+    await transporter.sendMail({
+      from: SENDER_EMAIL,
+      to: process.env.IS_LOCAL === 'true' ? SENDER_EMAIL : email, 
+      subject: "Підтвердження заявки на подарунок",
+      text: `Привіт ${name}! 
+      Ми отримали вашу заявку на подарунок та звʼяжемося с вами найближчим часом.
+      Дякуємо за участь у проєкті!`,
+            html: `
+            <h2>Привіт ${name}!</h2>
+            <p>Ми отримали вашу заявку на подарунок та звʼяжемося с вами найближчим часом.</p>
+            <p>Дякуємо за участь у проєкті!</p>
+            <br>
+            <h3>Деталі заявки:</h3>
+            <p><strong>Телефон:</strong> ${phone}</p>
+            <p><strong>Email:</strong> ${email}</p>
+            <p><strong>Номер картки дитини:</strong> ${cardNumber}</p>
+            <p><strong>Коментарі:</strong> ${comments}</p>
+          `,
+    });
+
     return NextResponse.json({ message: 'Вашу заявку відправлено!  Ми звʼяжемося з вами найближчим часом' });
   } catch (error) {
     console.error(error);
