@@ -221,6 +221,7 @@ const handleDonation = async (formData: DonationFormData) => {
           onConfirm={handleDonation}
           cardNumber={activeCardId}
           kidName={childrenData.find(child => child.id === activeCardId)?.name || ''}
+          kidNameEn={childrenData.find(child => child.id === activeCardId)?.nameEn || ''}
         />
       )}
     </section>
