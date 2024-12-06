@@ -13,6 +13,7 @@ import 'swiper/css/pagination';
 import { MONO_JAR_LINK,} from "@/app/constants";
 import { useLanguage } from "@/app/LanguageContext";
 import { Virtual } from 'swiper/modules';
+import { SheetsService } from "@/service/SheetService";
 
 interface Child {
   id: string;
@@ -34,13 +35,13 @@ interface Translation {
   donateButton: string;
   closedLabel: string;
 }
-
+const sheetsService = SheetsService.getInstance();
 export default function HowToHelp() {
   const [childrenData, setChildrenData] = useState<Child[]>([]);
   const prevRef = useRef<HTMLDivElement>(null);
   const nextRef = useRef<HTMLDivElement>(null);
   const [page, setPage] = useState(1);
-  const itemsPerPage = 66;
+  const itemsPerPage = 6;
   const [isLoading, setIsLoading] = useState(false);
 
 
@@ -49,28 +50,14 @@ export default function HowToHelp() {
   const { lang } = useLanguage();
   const [translations, setTranslations] = useState<Translation[]>([]);
 
-  const fetchChildrenData = async (pageNum: number) => {
-    try {
-      const response = await fetch(`/api/sheets?page=${pageNum}&limit=${itemsPerPage}`, {
-        method: "GET"
-      });
-      if (!response.ok) {
-        console.error('Failed to fetch Google Sheet data');
-      }
-      const {data} = await response.json();
-      return data;
-    } catch (error) {
-      console.error('Error fetching Google Sheet data:', error);
-      return null;
-    }
-  };
+
 
   const loadMore = async () => {
     if (isLoading || childrenData.length === 0) return;
     
     setIsLoading(true);
     const nextPage = page + 1;
-    const newData = await fetchChildrenData(nextPage);
+    const newData = await sheetsService.getChildrenData(nextPage ,itemsPerPage);
     if (newData) {
       setChildrenData(prev => [...prev, ...newData]);
       setPage(nextPage);
@@ -106,7 +93,7 @@ const handleDonation = async (formData: DonationFormData) => {
       .then(data => setTranslations(data.data));
 
     const fetchData = async () => {
-      const children = await fetchChildrenData(1);
+      const children = await sheetsService.getChildrenData(1, itemsPerPage);
       if(children)
       setChildrenData(children);
     };
@@ -171,7 +158,8 @@ const handleDonation = async (formData: DonationFormData) => {
                       src={child.imgSrc} 
                       alt={child.name} 
                       fill
-                      loading="lazy"
+                      loading="eager"
+                      priority
                       placeholder="blur"
                       blurDataURL="./logoTransperentOrange.png"
                       sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"

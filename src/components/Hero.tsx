@@ -93,7 +93,7 @@ export default function Hero() {
                   src={image.url}
                   alt={image.alt}
                   fill
-                  priority={false}
+                  priority
                   sizes="100vw"
                   quality={65}
                   style={{ 

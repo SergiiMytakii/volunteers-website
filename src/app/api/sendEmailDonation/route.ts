@@ -18,8 +18,9 @@ export async function POST(req: Request) {
 
     await transporter.sendMail({
       from: SENDER_EMAIL,
-      to: process.env.IS_LOCAL === 'true' ? SENDER_EMAIL : ADMIN_EMAIL, 
-      subject: "Новий донат на подарунок",
+      to: SENDER_EMAIL, 
+      cc: ADMIN_EMAIL,
+      subject:process.env.IS_LOCAL === 'true' ? "Новий донат на подарунок TEST" : "Новий донат на подарунок",
       text: `Імʼя: ${name}\nНомер картки дитини: ${cardNumber}\Коментар: ${comments}`,
       html: `
       <p><strong>Імʼя:</strong> ${name}</p>
