@@ -10,7 +10,7 @@ import Image from 'next/image';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
-import { MONO_JAR_LINK,} from "@/app/constants";
+import { MONO_JAR_LINK, PAYPAL_LINK,} from "@/app/constants";
 import { useLanguage } from "@/app/LanguageContext";
 import { Virtual } from 'swiper/modules';
 import { SheetsService } from "@/service/SheetService";
@@ -68,7 +68,7 @@ export default function HowToHelp() {
   
   
 
-const handleDonation = async (formData: DonationFormData) => {
+const handleDonationMono = async (formData: DonationFormData) => {
   fetch('/api/submitDonation', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -81,6 +81,24 @@ const handleDonation = async (formData: DonationFormData) => {
   });
     window.open(
       `${MONO_JAR_LINK}?t=from:${formData.name},%20child:${formData.cardNumber}`,
+      "_blank",
+      "noopener,noreferrer"
+    );
+  setActiveCardId(null);
+};
+const handleDonationPayPal = async (formData: DonationFormData) => {
+  fetch('/api/submitDonation', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(formData),
+  });
+  fetch('/api/sendEmailDonation', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(formData),
+  });
+    window.open(
+      `${PAYPAL_LINK}`,
       "_blank",
       "noopener,noreferrer"
     );
@@ -218,7 +236,8 @@ const handleDonation = async (formData: DonationFormData) => {
         <DonationDialog 
           isOpen={!!activeCardId}
           onClose={() => setActiveCardId(null)}
-          onConfirm={handleDonation}
+          onConfirmMono={handleDonationMono}
+          onConfirmPayPal={handleDonationPayPal}
           cardNumber={activeCardId}
           kidName={childrenData.find(child => child.id === activeCardId)?.name || ''}
           kidNameEn={childrenData.find(child => child.id === activeCardId)?.nameEn || ''}
