@@ -12,14 +12,18 @@ const montserrat = Montserrat({
 
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <LanguageProvider>
+      <RootLayoutContent>{children}</RootLayoutContent>
+    </LanguageProvider>
+  );
+}
+
+function RootLayoutContent({ children }: { children: React.ReactNode }) {
   const { lang } = useLanguage();
   return (
     <html lang={lang} className={montserrat.className} suppressHydrationWarning>
-      <body suppressHydrationWarning>
-        <LanguageProvider>
-          {children}
-        </LanguageProvider>
-      </body>
+      <body suppressHydrationWarning>{children}</body>
     </html>
   );
 }

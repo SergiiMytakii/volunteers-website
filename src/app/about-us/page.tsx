@@ -84,6 +84,7 @@ export default function AboutAsPage() {
 										objectFit: 'cover',
 										objectPosition: 'top',
 									}}
+									className="w-full rounded-lg rotate-0"
 								/>
 							</div>
 						))}
@@ -119,7 +120,7 @@ export default function AboutAsPage() {
 										objectFit: 'cover',
 										objectPosition: 'top',
 									}}
-									className="w-full rounded-lg"
+									className="w-full rounded-lg rotate-0"
 								/>
 							</div>
 						))}
@@ -149,7 +150,7 @@ export default function AboutAsPage() {
 										objectFit: 'cover',
 										objectPosition: 'top',
 									}}
-									className="rounded-lg"
+									className="w-full rounded-lg rotate-0"
 								/>
 							</div>
 						))}
