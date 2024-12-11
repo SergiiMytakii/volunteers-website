@@ -129,7 +129,7 @@ export default function Hero() {
             {currentTranslation?.button && (
               <button 
                 onClick={() => scrollToSection('help')} 
-                className="bg-red-500 text-white px-8 py-4 text-lg rounded-full hover:bg-orange-600 transition-colors mt-16"
+                className="bg-red-500 text-white px-8 py-4 text-lg rounded-full hover:bg-red-600 transition-colors mt-16"
               >
                 {currentTranslation.button}
               </button>

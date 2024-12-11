@@ -22,7 +22,7 @@ export default function ThankYou() {
   const currentTranslation = translations.find(t => t.lang === lang) || translations[0];
 
   return (
-    <section className="w-full bg-gray-50 py-20">
+    <section className="w-full bg-white py-20">
       <div className="max-w-7xl mx-auto px-4 text-center">
         <h2 className="text-4xl font-bold mb-8">{currentTranslation?.title}</h2>
         <p className="text-lg text-gray-700 max-w-2xl mx-auto">
