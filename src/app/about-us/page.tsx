@@ -67,7 +67,7 @@ export default function AboutAsPage() {
 
 					{/* Photo Grid - 3x3 */}
 					<div className="grid grid-cols-2 md:grid-cols-3 gap-4 mt-12">
-                    {aboutImages?.slice(0, window.innerWidth < 768 ? 6 : 9).map((photo, index) => (
+						{aboutImages?.slice(0, window.innerWidth < 768 ? 6 : 9).map((photo, index) => (
 							<div
 								key={index}
 								className="aspect-square relative hover:scale-105 transition-transform">
@@ -114,6 +114,11 @@ export default function AboutAsPage() {
 									alt={photo.alt}
 									width={800}
 									height={600}
+									quality={65}
+									style={{
+										objectFit: 'cover',
+										objectPosition: 'top',
+									}}
 									className="w-full rounded-lg"
 								/>
 							</div>
@@ -137,8 +142,13 @@ export default function AboutAsPage() {
 								<Image
 									src={photo.url}
 									alt={photo.alt}
+									quality={65}
 									width={800}
 									height={600}
+									style={{
+										objectFit: 'cover',
+										objectPosition: 'top',
+									}}
 									className="rounded-lg"
 								/>
 							</div>
