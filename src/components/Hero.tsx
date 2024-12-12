@@ -111,7 +111,7 @@ export default function Hero() {
 ))}
         </Slider>
       </div>
-      {/* <div className="absolute inset-0 bg-black/20"></div> */}
+      <div className="absolute inset-0 bg-black/10"></div>
       <div className="relative z-10 max-w-7xl mx-auto h-full flex items-center text-white px-4">
         <div className="grid grid-cols-1 md:grid-cols-2 w-full gap-8 items-center">
           <div className="text-left">
