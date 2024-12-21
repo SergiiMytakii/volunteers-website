@@ -8,7 +8,12 @@ export class SheetsService {
   private cache: ChildrenData[] = [];
   private sheet: any;
 
-  private constructor() {}
+  private constructor() {
+    // Set up automatic cache clearing every hour
+    setInterval(() => {
+      this.cache = []
+    }, 3600000); 
+  }
 
   public static getInstance(): SheetsService {
     if (!SheetsService.instance) {
