@@ -12,7 +12,7 @@ export class SheetsService {
     // Set up automatic cache clearing every hour
     setInterval(() => {
       this.cache = []
-    }, 3600000); 
+    }, 360000); 
   }
 
   public static getInstance(): SheetsService {
