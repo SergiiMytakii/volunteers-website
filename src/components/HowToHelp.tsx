@@ -43,6 +43,11 @@ export default function HowToHelp() {
   const [page, setPage] = useState(1);
   const itemsPerPage = 6;
   const [isLoading, setIsLoading] = useState(false);
+  const [fullScreenImage, setFullScreenImage] = useState<string | null>(null);
+  const [isFullScreenLoading, setIsFullScreenLoading] = useState(false);
+
+const [scale, setScale] = useState(1);
+
 
 
   const [activeCardId, setActiveCardId] = useState<string | null>(null);
@@ -65,7 +70,15 @@ export default function HowToHelp() {
     setIsLoading(false);
   };
   
+  const handleImageClick = (imageSrc: string) => {
+    setIsFullScreenLoading(true);
+    setFullScreenImage(imageSrc);
+    setScale(1);
+  };
   
+  const handleZoom = (delta: number) => {
+    setScale(prev => Math.min(Math.max(0.5, prev + delta), 3));
+  };
   
 
 const handleDonationMono = async (formData: DonationFormData) => {
@@ -172,20 +185,24 @@ const handleDonationPayPal = async (formData: DonationFormData) => {
               <div className="bg-white rounded-lg shadow-lg overflow-hidden">
                 <div className="h-[550px] relative">
                 {child.imgSrc && child.imgSrc.trim() !== "" && (
-                    <Image 
-                      src={child.imgSrc} 
-                      alt={child.name} 
-                      fill
-                      loading="eager"
-                      priority
-                      placeholder="blur"
-                      blurDataURL="./logoTransperentOrange.png"
-                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                      className="object-cover"
-                      onError={(e) => {
-                        e.currentTarget.src = '/logoTransparentOrange.png'
-                      }}
-                    />
+                   // Update the Image component inside SwiperSlide
+                  <Image 
+                    src={child.imgSrc} 
+                    alt={child.name} 
+                    fill
+                    loading="eager"
+                    priority
+                    quality={100}
+                    placeholder="blur"
+                    blurDataURL="./logoTransperentOrange.png"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    className="object-cover cursor-pointer"
+                    onClick={() => handleImageClick(child.imgSrc)}
+                    onError={(e) => {
+                      e.currentTarget.src = '/logoTransparentOrange.png'
+                    }}
+                  />
+
                   )}
                 </div>
                 <div className="p-6 flex-1 flex flex-col">
@@ -243,6 +260,54 @@ const handleDonationPayPal = async (formData: DonationFormData) => {
           kidNameEn={childrenData.find(child => child.id === activeCardId)?.nameEn || ''}
         />
       )}
+    {fullScreenImage && (
+        <div 
+          className="fixed inset-0 bg-black bg-opacity-90 z-50 flex items-center justify-center"
+          onClick={() => {
+            setFullScreenImage(null);
+            setScale(1);
+          }}
+        >
+          <div 
+            className="relative cursor-zoom-in"
+            onClick={e => e.stopPropagation()}
+            onWheel={(e) => handleZoom(e.deltaY > 0 ? -0.1 : 0.1)}
+          >
+            {isFullScreenLoading && (
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="w-12 h-12 border-4 border-red-500 border-t-transparent rounded-full animate-spin" />
+              </div>
+            )}
+            <Image
+              src={fullScreenImage}
+              alt="Full screen view"
+              width={1920}
+              height={1080}
+              quality={100}
+              onLoadingComplete={() => setIsFullScreenLoading(false)}
+              style={{ 
+                transform: `scale(${scale})`,
+                transition: 'transform 0.2s',
+                maxHeight: '90vh',
+                width: 'auto'
+              }}
+              className="object-contain"
+            />
+            {!isFullScreenLoading && (
+              <button
+                className="absolute top-4 right-4 text-white text-2xl"
+                onClick={() => {
+                  setFullScreenImage(null);
+                  setScale(1);
+                }}
+              >
+                ✕
+              </button>
+            )}
+          </div>
+        </div>
+      )}
+
     </section>
   );
 }
