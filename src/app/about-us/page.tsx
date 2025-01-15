@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation';
 import { FaHome } from 'react-icons/fa';
 
 interface Translation {
-	lang: string;
+	lang: string;  
 	title: string;
 	description: string;
 	title2: string;
