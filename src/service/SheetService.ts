@@ -23,9 +23,9 @@ export class SheetsService {
   }
 
 
-  private async loadSheet(): Promise<ChildrenData[]> {
+  private async loadSheet(apiEndpoint: string = '/api/sheets'): Promise<ChildrenData[]> {
         try {
-          const response = await fetch(`/api/sheets`, {
+          const response = await fetch(apiEndpoint, {
             method: "GET"
           });
           if (!response.ok) {
@@ -48,9 +48,9 @@ export class SheetsService {
         }
   }
 
-  private async loadRows(): Promise<any[]> {
+  private async loadRows(apiEndpoint?: string): Promise<any[]> {
     if (this.cache.length === 0) {
-      const sheet = await this.loadSheet();
+      const sheet = await this.loadSheet(apiEndpoint);
       this.cache = sheet.sort((a, b) => {
         if (a.fundOpen === b.fundOpen) return 0;
         return a.fundOpen ? -1 : 1;
@@ -59,8 +59,8 @@ export class SheetsService {
     return this.cache;
   }
 
-  public async getChildrenData(page: number, limit: number): Promise<any[]> {
-    const rows = await this.loadRows();
+  public async getChildrenData(page: number, limit: number, apiEndpoint?: string): Promise<any[]> {
+    const rows = await this.loadRows(apiEndpoint);
     const startRow = (page - 1) * limit;
     return rows.slice(startRow, startRow + limit);
   }

@@ -7,10 +7,10 @@ import ThankYou from "@/components/ThankYou";
 export default function DivaTraplaytsya() {
     return (
       <div className="w-full">
-        <AboutProject />
-        <HowToHelp />
-        <ContactForm />
-        <FAQ/>
+        <AboutProject translationsApiEndpoint="/api/translations/aboutProject" imagesApiEndpoint="/api/images/about" />
+        <HowToHelp translationsApiEndpoint="/api/translations/help" childrenDataApiEndpoint="/api/sheets" />
+        <ContactForm translationsApiEndpoint="/api/translations/contactForm" />
+        <FAQ translationsApiEndpoint="/api/translations/faq" />
         <ThankYou />
       </div>
     );

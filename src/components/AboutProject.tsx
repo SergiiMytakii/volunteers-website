@@ -20,24 +20,30 @@ interface AboutImage {
 	alt: string;
 }
 
-export default function AboutProject() {
+interface AboutProjectProps {
+	translationsApiEndpoint: string;
+        imagesApiEndpoint: string;
+}
+
+export default function AboutProject({ translationsApiEndpoint, imagesApiEndpoint }: AboutProjectProps) {
 	const { lang } = useLanguage();
 	const [translations, setTranslations] = useState<Translation[]>([]);
 	const [aboutImage, setAboutImage] = useState<AboutImage | null>(null);
 
 	useEffect(() => {
-		fetch('/api/translations/aboutProject')
+		fetch(translationsApiEndpoint)
 			.then((res) => res.json())
-			.then((data) => setTranslations(data.data));
+			.then((data) => setTranslations(data.data))
+                        .catch(error => console.error(`Failed to fetch translations from ${translationsApiEndpoint}:`, error));
 
-		fetch('/api/images/about')
+		fetch(imagesApiEndpoint)
 			.then((res) => res.json())
 			.then((data) => {
 				if (data.images && data.images.length > 0) {
 					setAboutImage(data.images[0]);
 				}
 			});
-	}, []);
+	}, [imagesApiEndpoint, translationsApiEndpoint]);
 
 	const currentTranslation = translations.find((t) => t.lang === lang) || translations[0];
 

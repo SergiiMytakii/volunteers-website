@@ -15,16 +15,21 @@ interface Translation {
   items: FAQItem[];
 }
 
-export default function FAQ() {
+interface FAQProps {
+  translationsApiEndpoint: string;
+}
+
+export default function FAQ({ translationsApiEndpoint }: FAQProps) {
   const { lang } = useLanguage();
   const [translations, setTranslations] = useState<Translation[]>([]);
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   useEffect(() => {
-    fetch('/api/translations/faq')
+    fetch(translationsApiEndpoint)
       .then(res => res.json())
-      .then(data => setTranslations(data.data));
-  }, []);
+      .then(data => setTranslations(data.data))
+      .catch(error => console.error(`Failed to fetch translations from ${translationsApiEndpoint}:`, error));
+  }, [translationsApiEndpoint]);
 
   const currentTranslation = translations.find(t => t.lang === lang) || translations[0];
 
