@@ -73,7 +73,7 @@ const NavigationCards = () => {
     },
     {
       id: 'card2',
-      href: '#', // Placeholder link for the second card
+      href: '/super-hero', // Placeholder link for the second card
     },
     // {
     //   id: 'card3',

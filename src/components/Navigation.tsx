@@ -53,7 +53,7 @@ export default function Navigation() {
 								{menuItems[lang].diva}
 							</button>
 							<button
-								onClick={() => router.push('/diva-traplaytsya')}
+								onClick={() => router.push('/super-hero')}
 								className="text-gray-700 hover:text-red-500 transition-colors">
 								{menuItems[lang].superHero}
 							</button>
@@ -109,7 +109,7 @@ export default function Navigation() {
 								{menuItems[lang].diva}
 							</button>
 							<button
-									onClick={() => router.push('/diva-traplaytsya')}
+									onClick={() => router.push('/super-hero')}
 								className="text-gray-700 hover:text-red-500 transition-colors px-4 py-2 text-left">
 								{menuItems[lang].superHero}
 							</button>
