@@ -28,7 +28,7 @@ export async function GET() {
 
     return new Response(JSON.stringify({ data: formattedData }), {
       status: 200,
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json',      'Cache-Control': 'public, max-age=60, stale-while-revalidate=300', },
     });
   } catch (error) {
     console.log(error);

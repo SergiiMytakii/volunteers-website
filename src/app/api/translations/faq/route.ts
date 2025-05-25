@@ -39,7 +39,7 @@ export async function GET() {
     console.log(error);
     return new Response(JSON.stringify({ error: error}), {
       status: 500,
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json',      'Cache-Control': 'public, max-age=60, stale-while-revalidate=300', },
     });
   }
 }

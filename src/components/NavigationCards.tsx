@@ -51,8 +51,8 @@ const NavCard: React.FC<NavCardProps> = ({ href, title, description, imageUrl })
         />
       </div>
       <div className="p-5">
-        <h5 className="mb-2 text-xl sm:text-2xl font-bold tracking-tight text-gray-900 group-hover:text-red-500 transition-colors duration-300">{title}</h5>
-        <p className="font-normal text-gray-700 text-sm sm:text-base text-left">{description}</p>
+        <h5 className="mb-2 text-xl sm:text-2xl font-bold tracking-tight text-gray-900 group-hover:text-red-500 transition-colors duration-300" dangerouslySetInnerHTML={{ __html: title }}></h5>
+        <p className="font-normal text-gray-700 text-sm sm:text-base text-left" dangerouslySetInnerHTML={{ __html: description }}></p>
       </div>
     </Link>
   );
@@ -139,9 +139,7 @@ const NavigationCards = () => {
   return (
     <section className="py-12 bg-gray-50">
       <div className="container mx-auto text-center px-4">
-        <h2 className="text-3xl sm:text-4xl font-bold text-center mb-10 text-gray-900">
-          {currentCardTranslations?.sectionTitle || 'Our Projects and Initiatives'}
-        </h2>
+        <h2 className="text-3xl sm:text-4xl font-bold text-center mb-10 text-gray-900" dangerouslySetInnerHTML={{ __html: currentCardTranslations?.sectionTitle || 'Our Projects and Initiatives' }}></h2>
         <div className="grid grid-cols-1 sm:grid-cols-2  gap-6 md:gap-8 lg:gap-10">
           {cardsToDisplay.map((card) => (
             <NavCard key={card.id} {...card} />
