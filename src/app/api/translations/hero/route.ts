@@ -20,11 +20,27 @@ export async function GET() {
     const rows = await sheet.getRows(); 
     const formattedData = rows.map(row => ({
       lang: row.get('lang'),
+      // Hero section translations
       header: row.get('header'),
-     title: row.get('title'),
-     description: row.get('description'),
+      title: row.get('title'),
+      description: row.get('description'),
       button: row.get('button'),
-
+      // NavigationCards section translations
+      navigationCards: {
+        sectionTitle: row.get('sectionTitle'),
+        title1: row.get('title1'),
+        description1: row.get('description1'),
+        imageUrl1: row.get('imageUrl1'),
+        title2: row.get('title2'),
+        description2: row.get('description2'),
+        imageUrl2: row.get('imageUrl2'),
+        title3: row.get('title3'),
+        description3: row.get('description3'),
+        imageUrl3: row.get('imageUrl3'),
+        title4: row.get('title4'),
+        description4: row.get('description4'),
+        imageUrl4: row.get('imageUrl4'),
+      }
     }));
     return new Response(JSON.stringify({ data: formattedData }), {
       status: 200,

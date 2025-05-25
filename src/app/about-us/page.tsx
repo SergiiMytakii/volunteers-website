@@ -3,8 +3,6 @@
 import { useLanguage } from '../../app/LanguageContext';
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
-import { FaHome } from 'react-icons/fa';
 
 interface Translation {
 	lang: string;  
@@ -34,7 +32,6 @@ const LoadingOverlay = () => (
 	</div>
 );
 export default function AboutAsPage() {
-	const router = useRouter();
 	const { lang } = useLanguage();
 	const [translations, setTranslations] = useState<Translation[]>([]);
 	const [aboutImages, setAboutImages] = useState<AboutImages[] | null>(null);
@@ -58,13 +55,6 @@ export default function AboutAsPage() {
 	return (
 		<div className="w-full min-h-screen pt-24">
 			{!currentTranslation && <LoadingOverlay />}
-			<nav className="w-full bg-white shadow-md fixed top-0 z-50 px-6 py-1">
-				<div className="flex flex-row gap-4">
-					<button onClick={() => router.back()} className="flex flex-row gap-2 items-center">
-						<FaHome className="text-3xl text-red-600" />
-					</button>
-				</div>
-			</nav>
 			<div className="max-w-7xl mx-auto px-4">
 				<h1 className="text-4xl md:text-5xl font-bold mb-8">{currentTranslation?.title}</h1>
 				{/* First Text Section */}

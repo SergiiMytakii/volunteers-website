@@ -66,7 +66,7 @@ export default function AboutProject() {
 					)}
 				</div>
 
-				<div className="w-full md:w-1/2 text-lg text-gray-700 px-4">
+				<div className="w-full md:w-1/2 text-lg text-gray-700 px-8">
 					<div className="text-left self-start w-full description-container font-semibold mb-6">
 						<p
 							className="text-left text-1xl mb-8 max-w-2xl"

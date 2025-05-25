@@ -4,7 +4,7 @@ import FAQ from "@/components/FAQ";
 import HowToHelp from "@/components/HowToHelp";
 import ThankYou from "@/components/ThankYou";
 
-export default function VolunteersPage() {
+export default function DivaTraplaytsya() {
     return (
       <div className="w-full">
         <AboutProject />

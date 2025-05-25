@@ -24,12 +24,12 @@ export default function Hero() {
   const { lang } = useLanguage();
   const [heroImages, setHeroImages] = useState<HeroImage[]>([]);
 
-  const scrollToSection = (elementId: string) => {
-    const element = document.getElementById(elementId);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
+  // const scrollToSection = (elementId: string) => {
+  //   const element = document.getElementById(elementId);
+  //   if (element) {
+  //     element.scrollIntoView({ behavior: 'smooth' });
+  //   }
+  // };
   const [translations, setTranslations] = useState<Translation[]>([{
     lang: 'uk',
     header: '',
@@ -126,14 +126,14 @@ export default function Hero() {
                 dangerouslySetInnerHTML={{ __html: currentTranslation?.description || '' }}
               />
             </div>
-            {currentTranslation?.button && (
+            {/* {currentTranslation?.button && (
               <button 
                 onClick={() => scrollToSection('help')} 
                 className="bg-red-500 text-white px-8 py-4 text-lg rounded-full hover:bg-red-600 transition-colors mt-16"
               >
                 {currentTranslation.button}
               </button>
-            )}
+            )} */}
           </div>
         </div>
       </div>

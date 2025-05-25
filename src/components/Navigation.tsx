@@ -3,10 +3,13 @@
 import Image from 'next/image';
 import { useState } from 'react';
 import { useLanguage } from '../app/LanguageContext';
+import { useRouter } from 'next/navigation';
+
 
 export default function Navigation() {
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
 	const { lang, setLang } = useLanguage();
+	const router = useRouter();
 
 	const scrollToSection = (elementId: string) => {
 		const element = document.getElementById(elementId);
@@ -17,21 +20,17 @@ export default function Navigation() {
 	};
 
 	const menuItems: {
-		[key: string]: { about: string; help: string; contact: string; faq: string; aboutAs: string };
+		[key: string]: { diva: string; superHero: string; aboutAs: string };
 	} = {
 		uk: {
-			about: 'Про проєкт',
-			help: 'Як допомогти',
-			contact: 'Контакти',
-			faq: 'FAQ',
+			diva: 'Дива трапляються',
+			superHero: 'Супер Герой',
 			aboutAs: 'Про нас',
 		},
 		en: {
-			about: 'About',
-			help: 'How to Help',
-			contact: 'Contact',
-			faq: 'FAQ',
-			aboutAs: 'About us',
+			diva: 'Miracles Happen',
+			superHero: 'Superhero',
+			aboutAs: 'About Us',
 		},
 	};
 
@@ -41,7 +40,7 @@ export default function Navigation() {
 				<div className="flex justify-between items-center h-16">
 					<div className="flex-shrink-0 px-2">
 						<div className="flex flex-row gap-4">
-							<button onClick={() => scrollToSection('home')} className="flex items-center">
+							<button onClick={() => router.push('/')} className="flex items-center">
 								<Image
 									src="/logoTransperentOrange.png"
 									alt="Logo"
@@ -56,16 +55,16 @@ export default function Navigation() {
 					<div className="hidden md:block">
 						<div className="flex items-center space-x-8">
 							<button
-								onClick={() => scrollToSection('about')}
+								onClick={() => router.push('/diva-traplaytsya')}
 								className="text-gray-700 hover:text-red-500 transition-colors">
-								{menuItems[lang].about}
+								{menuItems[lang].diva}
 							</button>
 							<button
-								onClick={() => scrollToSection('help')}
+								onClick={() => router.push('/diva-traplaytsya')}
 								className="text-gray-700 hover:text-red-500 transition-colors">
-								{menuItems[lang].help}
+								{menuItems[lang].superHero}
 							</button>
-							<button
+							{/* <button
 								onClick={() => scrollToSection('contact')}
 								className="text-gray-700 hover:text-red-500 transition-colors">
 								{menuItems[lang].contact}
@@ -74,9 +73,9 @@ export default function Navigation() {
 								onClick={() => scrollToSection('faq')}
 								className="text-gray-700 hover:text-red-500 transition-colors">
 								{menuItems[lang].faq}
-							</button>
+							</button> */}
 							<button
-								onClick={() => scrollToSection('aboutAsSection')}
+									onClick={() => router.push('/about-us')}
 								className="text-gray-700 hover:text-red-500 transition-colors">
 								{menuItems[lang].aboutAs}
 							</button>
@@ -114,14 +113,14 @@ export default function Navigation() {
 							<button
 								onClick={() => scrollToSection('about')}
 								className="text-gray-700 hover:text-red-500 transition-colors px-4 py-2 text-left">
-								{menuItems[lang].about}
+								{menuItems[lang].diva}
 							</button>
 							<button
 								onClick={() => scrollToSection('help')}
 								className="text-gray-700 hover:text-red-500 transition-colors px-4 py-2 text-left">
-								{menuItems[lang].help}
+								{menuItems[lang].superHero}
 							</button>
-							<button
+							{/* <button
 								onClick={() => scrollToSection('contact')}
 								className="text-gray-700 hover:text-red-500 transition-colors px-4 py-2 text-left">
 								{menuItems[lang].contact}
@@ -130,7 +129,7 @@ export default function Navigation() {
 								onClick={() => scrollToSection('faq')}
 								className="text-gray-700 hover:text-red-500 transition-colors px-4 py-2 text-left">
 								{menuItems[lang].faq}
-							</button>
+							</button> */}
 							<button
 								onClick={() => scrollToSection('aboutAsSection')}
 								className="text-gray-700 hover:text-red-500 transition-colors px-4 py-2 text-left">
