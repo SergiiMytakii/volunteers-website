@@ -1,4 +1,4 @@
-import { ADMIN_EMAIL, SENDER_EMAIL, ZOHO_SMTP_HOST, ZOHO_SMTP_PORT } from '@/app/constants';
+import { ACCOUNT_EMAIL, ADMIN_EMAIL, SENDER_EMAIL, ZOHO_SMTP_HOST, ZOHO_SMTP_PORT } from '@/app/constants';
 import { NextResponse } from 'next/server';
 import nodemailer from 'nodemailer';
 
@@ -21,7 +21,7 @@ export async function POST(req: Request) {
     await transporter.sendMail({
       from: SENDER_EMAIL,
       to: SENDER_EMAIL, 
-      cc: ADMIN_EMAIL,
+      cc: [ADMIN_EMAIL, ACCOUNT_EMAIL],
       subject: process.env.IS_LOCAL === 'true' ? "Нова заявка на подарунок TEST" : "Нова заявка на подарунок",
       text: `Імʼя: ${name}\n Телефон: ${phone}\nEmail: ${email}\nНомер картки дитини: ${cardNumber}\Коментарі: ${comments}`,
       html: `

@@ -4,7 +4,7 @@ import { NextResponse } from 'next/server';
 
 export async function GET() {
   try {
-    const heroFolderRef = ref(storage, '/volunteers-website-assets/aboutUs');
+    const heroFolderRef = ref(storage, '/volunteers-website-assets/superHeroAboutProject');
     const result = await listAll(heroFolderRef);
     
     const imageUrls = await Promise.all(
