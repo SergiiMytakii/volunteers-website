@@ -8,4 +8,4 @@ export const ACCOUNT_EMAIL='ochima.do.ochej@gmail.com'
 export const ZOHO_SMTP_HOST='smtp.zoho.eu'
 export const ZOHO_SMTP_PORT=587
 export const MONO_JAR_LINK = 'https://send.monobank.ua/jar/UpDi8qk45'
-export const PAYPAL_LINK = 'https://www.paypal.com/donate/?hosted_button_id=F6X3X8R6D2TXY'
+export const PAYPAL_LINK = 'https://www.paypal.com/donate/?hosted_button_id=VLAJQYUZNJQYN'

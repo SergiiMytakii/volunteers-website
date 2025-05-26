@@ -18,13 +18,13 @@ export default function Navigation() {
 		uk: {
 			home: 'Головна',
 			diva: 'Дива трапляються',
-			superHero: 'Супер Герой',
+			superHero: 'Підлитковий табір',
 			aboutAs: 'Про нас',
 		},
 		en: {
 			home: 'Home',
 			diva: 'Miracles Happen',
-			superHero: 'Superhero',
+			superHero: 'Teens Camp',
 			aboutAs: 'About Us',
 		},
 	};
