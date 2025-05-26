@@ -40,7 +40,9 @@ export async function GET(request: Request) {
       dream: row.get('dream'),
       dreamEn: row.get('dreamEn'),
       imgSrc: row.get('imgSrc'),
-      fundOpen: row.get('fundOpen') === 'TRUE'
+      fundOpen: row.get('fundOpen') === 'TRUE',
+      desiredAmount: row.get('desiredAmount'),
+      funded: row.get('funded')
     }));
 
     // Return paginated data

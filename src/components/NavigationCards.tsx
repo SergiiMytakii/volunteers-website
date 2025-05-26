@@ -67,13 +67,13 @@ const NavigationCards = () => {
   // Base structure for the cards, defining their IDs and links.
   // Titles, descriptions, and images will come from translations.
   const baseCardLinks: NavCardLink[] = [
-    {
-      id: 'card1',
-      href: '/diva-traplaytsya', // Link for the first card
-    },
+      {
+        id: 'card1',
+        href: '/super-hero', // Placeholder link for the second card
+      },
     {
       id: 'card2',
-      href: '/super-hero', // Placeholder link for the second card
+      href: '/diva-traplaytsya', // Link for the first card
     },
     // {
     //   id: 'card3',

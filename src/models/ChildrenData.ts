@@ -9,6 +9,8 @@ export class ChildrenData {
     dreamEn: string;
     imgSrc: string;
     fundOpen: boolean;
+    desiredAmount: number;
+    funded: number;
   
     constructor(data: {
       id: string;
@@ -19,6 +21,8 @@ export class ChildrenData {
       dreamEn: string;
       imgSrc: string;
       fundOpen: boolean;
+      desiredAmount: number;
+      funded: number;
     }) {
       this.id = data.id;
       this.name = data.name;
@@ -28,6 +32,8 @@ export class ChildrenData {
       this.dreamEn = data.dreamEn;
       this.imgSrc = data.imgSrc;
       this.fundOpen = data.fundOpen;
+      this.desiredAmount = data.desiredAmount;
+      this.funded = data.funded;
     }
 
   }

@@ -25,6 +25,7 @@ export class SheetsService {
 
   private async loadSheet(apiEndpoint: string = '/api/sheets'): Promise<ChildrenData[]> {
         try {
+          console.log(apiEndpoint)
           const response = await fetch(apiEndpoint, {
             method: "GET"
           });
@@ -40,7 +41,10 @@ export class SheetsService {
             dream: item.dream,
             dreamEn: item.dreamEn,
             imgSrc: item.imgSrc,
-            fundOpen: item.fundOpen
+            fundOpen: item.fundOpen,
+            desiredAmount: item.desiredAmount,
+            funded: item.funded
+
           }));
         } catch (error) {
           console.error('Error fetching Google Sheet data:', error);

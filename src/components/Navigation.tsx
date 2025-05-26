@@ -13,14 +13,16 @@ export default function Navigation() {
 
 
 	const menuItems: {
-		[key: string]: { diva: string; superHero: string; aboutAs: string };
+		[key: string]: { home: string, diva: string; superHero: string; aboutAs: string };
 	} = {
 		uk: {
+			home: 'Головна',
 			diva: 'Дива трапляються',
 			superHero: 'Супер Герой',
 			aboutAs: 'Про нас',
 		},
 		en: {
+			home: 'Home',
 			diva: 'Miracles Happen',
 			superHero: 'Superhero',
 			aboutAs: 'About Us',
@@ -48,14 +50,19 @@ export default function Navigation() {
 					<div className="hidden md:block">
 						<div className="flex items-center space-x-8">
 							<button
-								onClick={() => router.push('/diva-traplaytsya')}
+								onClick={() => router.push('/')}
 								className="text-gray-700 hover:text-red-500 transition-colors">
-								{menuItems[lang].diva}
+								{menuItems[lang].home}
 							</button>
 							<button
 								onClick={() => router.push('/super-hero')}
 								className="text-gray-700 hover:text-red-500 transition-colors">
 								{menuItems[lang].superHero}
+							</button>
+							<button
+								onClick={() => router.push('/diva-traplaytsya')}
+								className="text-gray-700 hover:text-red-500 transition-colors">
+								{menuItems[lang].diva}
 							</button>
 							{/* <button
 								onClick={() => scrollToSection('contact')}
@@ -103,15 +110,20 @@ export default function Navigation() {
 				{isMenuOpen && (
 					<div className="md:hidden py-4">
 						<div className="flex flex-col space-y-4">
-							<button
-									onClick={() => router.push('/diva-traplaytsya')}
-								className="text-gray-700 hover:text-red-500 transition-colors px-4 py-2 text-left">
-								{menuItems[lang].diva}
+						<button
+								onClick={() => router.push('/')}
+								className="text-gray-700 hover:text-red-500 transition-colors">
+								{menuItems[lang].home}
 							</button>
 							<button
 									onClick={() => router.push('/super-hero')}
 								className="text-gray-700 hover:text-red-500 transition-colors px-4 py-2 text-left">
 								{menuItems[lang].superHero}
+							</button>
+							<button
+									onClick={() => router.push('/diva-traplaytsya')}
+								className="text-gray-700 hover:text-red-500 transition-colors px-4 py-2 text-left">
+								{menuItems[lang].diva}
 							</button>
 							{/* <button
 								onClick={() => scrollToSection('contact')}

@@ -8,7 +8,7 @@ export default function DivaTraplaytsya() {
     return (
       <div className="w-full">
         <AboutProject translationsApiEndpoint="/api/translations/aboutProject" imagesApiEndpoint="/api/images/about" />
-        <HowToHelp translationsApiEndpoint="/api/translations/help" childrenDataApiEndpoint="/api/sheets" />
+        <HowToHelp translationsApiEndpoint="/api/translations/help" childrenDataApiEndpoint="/api/sheets" giftButton={true} donationDialogApiEndpoint="/api/translations/donationDialog" />
         <ContactForm translationsApiEndpoint="/api/translations/contactForm" />
         <FAQ translationsApiEndpoint="/api/translations/faq" />
         <ThankYou />

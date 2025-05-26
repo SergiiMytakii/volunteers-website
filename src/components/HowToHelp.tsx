@@ -39,11 +39,12 @@ interface Translation {
 interface HowToHelpProps {
   translationsApiEndpoint: string;
   childrenDataApiEndpoint: string;
-  giftButton?: boolean
+  giftButton: boolean
+  donationDialogApiEndpoint: string
 }
 
 const sheetsService = SheetsService.getInstance();
-export default function HowToHelp({ translationsApiEndpoint, childrenDataApiEndpoint, giftButton }: HowToHelpProps) {
+export default function HowToHelp({ translationsApiEndpoint, childrenDataApiEndpoint, giftButton , donationDialogApiEndpoint}: HowToHelpProps) {
   const [childrenData, setChildrenData] = useState<Child[]>([]);
   const prevRef = useRef<HTMLDivElement>(null);
   const nextRef = useRef<HTMLDivElement>(null);
@@ -61,6 +62,7 @@ export default function HowToHelp({ translationsApiEndpoint, childrenDataApiEndp
 
   const { lang } = useLanguage();
   const [translations, setTranslations] = useState<Translation[]>([]);
+  const [donationDialogTranslations, setDonationDialogTranslations] = useState();
 
 
 
@@ -137,12 +139,23 @@ export default function HowToHelp({ translationsApiEndpoint, childrenDataApiEndp
       // If SheetsService.getChildrenData needs direct endpoint, this needs adjustment
       const children = await sheetsService.getChildrenData(1, itemsPerPage, childrenDataApiEndpoint);
       if (children)
+        console.log(children)
         setChildrenData(children);
     };
 
     fetchData();
 
-  }, [translationsApiEndpoint, childrenDataApiEndpoint]);
+    fetch(`${donationDialogApiEndpoint}?lang=${lang}`)
+      .then(res => {
+        if (!res.ok) {
+          throw new Error(`HTTP error! status: ${res.status}`);
+        }
+        return res.json();
+      })
+      .then(data => setDonationDialogTranslations(data))
+      .catch(error => console.error('Failed to fetch donation dialog translations:', error));
+
+  }, [donationDialogApiEndpoint, translationsApiEndpoint, childrenDataApiEndpoint, lang]);
 
   const currentTranslation = translations.find(t => t.lang === lang) || translations[0];
 
@@ -222,6 +235,8 @@ export default function HowToHelp({ translationsApiEndpoint, childrenDataApiEndp
                     <p className="text-gray-600 min-h-[4.5rem] line-clamp-3">{lang == 'uk' ? child.dream : child.dreamEn}</p>
                     {/* <p className="text-gray-600 min-h-[1rem] line-clamp-2">{currentTranslation?.card}  {child.id}</p> */}
                   </div>
+                  
+                  {/* buttons block */}
                   <div className="mt-auto pt-8 flex gap-4 justify-center">
                     {child.fundOpen ? (
                       <>
@@ -269,6 +284,13 @@ export default function HowToHelp({ translationsApiEndpoint, childrenDataApiEndp
           cardNumber={activeCardId}
           kidName={childrenData.find(child => child.id === activeCardId)?.name || ''}
           kidNameEn={childrenData.find(child => child.id === activeCardId)?.nameEn || ''}
+          translations={donationDialogTranslations || {
+            title: '',
+            nameLabel: '',
+            namePlaceholder: '',
+            commentLabel: '',
+            commentPlaceholder: ''
+          }}
         />
       )}
       {fullScreenImage && (

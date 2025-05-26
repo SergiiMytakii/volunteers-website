@@ -1,6 +1,5 @@
 'use client';
 
-import { useLanguage } from '@/app/LanguageContext';
 import { useState } from 'react';
 import { FaTimes } from 'react-icons/fa';
 import { FaPaypal } from 'react-icons/fa';
@@ -14,6 +13,13 @@ interface DonationDialogProps {
 	cardNumber: string;
 	kidName: string;
 	kidNameEn: string;
+	translations: {
+		title: string;
+		nameLabel: string;
+		namePlaceholder: string;
+		commentLabel: string;
+		commentPlaceholder: string;
+	};
 }
 
 export interface DonationFormData {
@@ -33,6 +39,7 @@ export default function DonationDialog({
 	cardNumber,
 	kidName,
 	kidNameEn,
+	translations,
 }: DonationDialogProps) {
 	const [formData, setFormData] = useState<DonationFormData>({
 		name: '',
@@ -42,7 +49,6 @@ export default function DonationDialog({
 		kidName: kidName,
 		comments: '',
 	});
-	const { lang } = useLanguage();
 
 	if (!isOpen) return null;
 
@@ -60,25 +66,25 @@ export default function DonationDialog({
 				</button>
 
 				<h2 className="text-xl font-bold mb-4">
-					{lang === 'uk' ? `На подарунок для ${kidName}` : `For a gift for ${kidNameEn}`}
+					{translations.title.replace('{kidName}', kidName).replace('{kidNameEn}', kidNameEn)}
 				</h2>
 
 				<form className="space-y-4">
 					<div>
 						<label className="block text-gray-700 mb-2">
-							{lang === 'uk' ? 'Ваше ім`я:' : 'Your name'}
+							{translations.nameLabel}
 						</label>
 						<input
 							type="text"
 							value={formData.name}
 							onChange={(e) => setFormData({ ...formData, name: e.target.value })}
 							className="w-full px-3 py-2 rounded border"
-							placeholder={lang === 'uk' ? 'Введіть ваше імʼя' : 'Enter your name'}
+							placeholder={translations.namePlaceholder}
 						/>
 					</div>
 					<div>
 						<label className="block text-gray-700 mb-2 font-medium">
-							{lang === 'uk' ? 'Коментар:' : 'Comment'}
+							{translations.commentLabel}
 						</label>
 						<textarea
 							name="comments"
@@ -86,22 +92,22 @@ export default function DonationDialog({
 							onChange={(e) => setFormData({ ...formData, comments: e.target.value })}
 							className="w-full px-3 py-2 rounded border"
 							rows={1}
-							placeholder={lang === 'uk' ? 'Ваш коментар.' : 'Your comment.'}></textarea>
+							placeholder={translations.commentPlaceholder}></textarea>
 					</div>
 					<div className="flex gap-3 mt-6" >
 						{/* Mono Button */}
 						<button
 							type="button"
 							onClick={() => onConfirmMono(formData)}
-							 className="relative flex-1 h-12 rounded-full ">
-                 <div className="relative w-full h-full rounded-full overflow-hidden">
-							<Image
-								src="/mono1.png"
-								alt="MonoBank"
-								layout="fill"
-								objectFit="cover"
-							/>
-              </div>
+							className="relative flex-1 h-12 rounded-full ">
+							<div className="relative w-full h-full rounded-full overflow-hidden">
+								<Image
+									src="/mono1.png"
+									alt="MonoBank"
+									layout="fill"
+									objectFit="cover"
+								/>
+							</div>
 						</button>
 						<button
 							type="button"
