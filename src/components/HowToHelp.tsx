@@ -14,17 +14,9 @@ import { MONO_JAR_LINK, PAYPAL_LINK, } from "@/app/constants";
 import { useLanguage } from "@/app/LanguageContext";
 import { Virtual } from 'swiper/modules';
 import { SheetsService } from "@/service/SheetService";
+import { ChildrenData } from "@/models/ChildrenData";
 
-interface Child {
-  id: string;
-  name: string;
-  nameEn: string;
-  age: number;
-  dream: string;
-  dreamEn: string;
-  imgSrc: string;
-  fundOpen: boolean;
-}
+
 
 interface Translation {
   lang: string;
@@ -45,7 +37,7 @@ interface HowToHelpProps {
 
 const sheetsService = SheetsService.getInstance();
 export default function HowToHelp({ translationsApiEndpoint, childrenDataApiEndpoint, giftButton , donationDialogApiEndpoint}: HowToHelpProps) {
-  const [childrenData, setChildrenData] = useState<Child[]>([]);
+  const [childrenData, setChildrenData] = useState<ChildrenData[]>([]);
   const prevRef = useRef<HTMLDivElement>(null);
   const nextRef = useRef<HTMLDivElement>(null);
   const [page, setPage] = useState(1);
@@ -139,7 +131,6 @@ export default function HowToHelp({ translationsApiEndpoint, childrenDataApiEndp
       // If SheetsService.getChildrenData needs direct endpoint, this needs adjustment
       const children = await sheetsService.getChildrenData(1, itemsPerPage, childrenDataApiEndpoint);
       if (children)
-        console.log(children)
         setChildrenData(children);
     };
 
@@ -205,6 +196,7 @@ export default function HowToHelp({ translationsApiEndpoint, childrenDataApiEndp
           className="mt-12 relative !pb-12"
         >
           {childrenData.map((child, index) => (
+            
             <SwiperSlide key={child.id} virtualIndex={index} className="h-[850px] pb-4 ">
               <div className="bg-white rounded-lg shadow-lg overflow-hidden">
                 <div className="h-[550px] relative">
@@ -235,7 +227,30 @@ export default function HowToHelp({ translationsApiEndpoint, childrenDataApiEndp
                     <p className="text-gray-600 min-h-[4.5rem] line-clamp-3">{lang == 'uk' ? child.dream : child.dreamEn}</p>
                     {/* <p className="text-gray-600 min-h-[1rem] line-clamp-2">{currentTranslation?.card}  {child.id}</p> */}
                   </div>
-                  
+                  {/* Progress bar START */}
+                  {(child.desiredAmount ) && (
+
+                    <div className="my-4">
+                      <div className="text-sm text-gray-600 mb-1">
+                        {lang === 'uk' ? 'Зібрано:' : 'Collected:'} {child.funded?.toLocaleString() || 0} / {child.desiredAmount?.toLocaleString()}
+                      </div>
+                      <div className="w-full bg-gray-200 rounded-full h-6 overflow-hidden relative border border-gray-300">
+                        <div
+                          className={`h-full absolute left-0 top-0 rounded-full transition-all duration-500 ease-in-out flex items-center justify-center text-xs font-medium text-white`}
+                          style={{
+                            width: `${Math.min((child.funded || 0) / child.desiredAmount * 100, 100)}%`,
+                            backgroundColor: 
+                              (child.funded || 0) / child.desiredAmount * 100 < 30 ? '#ef4444' : // red-500
+                              (child.funded || 0) / child.desiredAmount * 100 < 70 ? '#f59e0b' : // amber-500
+                              '#22c55e' // green-500
+                          }}
+                        >
+                          {Math.round((child.funded || 0) / child.desiredAmount * 100)}%
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                  {/* Progress bar END */}
                   {/* buttons block */}
                   <div className="mt-auto pt-8 flex gap-4 justify-center">
                     {child.fundOpen ? (

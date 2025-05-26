@@ -25,7 +25,6 @@ export class SheetsService {
 
   private async loadSheet(apiEndpoint: string = '/api/sheets'): Promise<ChildrenData[]> {
         try {
-          console.log(apiEndpoint)
           const response = await fetch(apiEndpoint, {
             method: "GET"
           });
