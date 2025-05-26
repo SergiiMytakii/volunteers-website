@@ -230,19 +230,22 @@ export default function HowToHelp({ translationsApiEndpoint, childrenDataApiEndp
                   {/* Progress bar START */}
                   {(child.desiredAmount ) && (
 
-                    <div className="my-4">
+                    <div className="my-4 flex flex-col items-center">
                       <div className="text-sm text-gray-600 mb-1">
                         {lang === 'uk' ? 'Зібрано:' : 'Collected:'} {child.funded?.toLocaleString() || 0} / {child.desiredAmount?.toLocaleString()}
                       </div>
-                      <div className="w-full bg-gray-200 rounded-full h-6 overflow-hidden relative border border-gray-300">
+                      <div className="w-3/4 h-12 bg-gray-200 rounded border-2 border-gray-400 relative flex items-center pr-2">
+                        {/* Battery top */}
+                        <div className="absolute -right-1.5 top-1/2 -translate-y-1/2 w-1.5 h-3 bg-gray-400 rounded-r-sm"></div>
+                        {/* Battery fill */}
                         <div
-                          className={`h-full absolute left-0 top-0 rounded-full transition-all duration-500 ease-in-out flex items-center justify-center text-xs font-medium text-white`}
+                          className={`h-[calc(100%-4px)] ml-0.5 rounded-sm transition-all duration-500 ease-in-out flex items-center justify-center text-xs font-medium text-white`}
                           style={{
-                            width: `${Math.min((child.funded || 0) / child.desiredAmount * 100, 100)}%`,
+                            width: `calc(${Math.min((child.funded || 0) / child.desiredAmount * 100, 100)}% - 3px)`,
                             backgroundColor: 
                               (child.funded || 0) / child.desiredAmount * 100 < 30 ? '#ef4444' : // red-500
                               (child.funded || 0) / child.desiredAmount * 100 < 70 ? '#f59e0b' : // amber-500
-                              '#22c55e' // green-500
+                              '#22c55e', // green-500
                           }}
                         >
                           {Math.round((child.funded || 0) / child.desiredAmount * 100)}%
