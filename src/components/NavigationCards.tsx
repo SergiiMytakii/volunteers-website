@@ -45,9 +45,9 @@ const NavCard: React.FC<NavCardProps> = ({ href, title, description, imageUrl })
           alt={title}
           fill
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-          className="object-contain group-hover:scale-105 transition-transform duration-300 ease-in-out"
+          className="object-contain group-hover:scale-105 transition-transform duration-300 ease-in-out pt-4" // Added pt-10 here
           placeholder="blur"
-          blurDataURL="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIwIiBoZWlnaHQ9IjMyMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB2ZXJzaW9uPSIxLjEiLz4=" // Simple SVG placeholder
+          blurDataURL="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIwIiBoZWlnaHQ9IjMyMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMudzMub3JnLzIwMDAvc3ZnIiB2ZXJzaW9uPSIxLjEiLz4=" // Simple SVG placeholder
         />
       </div>
       <div className="p-5">
@@ -67,14 +67,14 @@ const NavigationCards = () => {
   // Base structure for the cards, defining their IDs and links.
   // Titles, descriptions, and images will come from translations.
   const baseCardLinks: NavCardLink[] = [
-      {
-        id: 'card1',
-        href: '/super-hero', 
-      },
     {
-      id: 'card2',
-      href: '/diva-traplaytsya', 
+      id: 'diva',
+      href: '/diva-traplaytsya',
     },
+      {
+        id: 'superHero',
+        href: '/super-hero',
+      },
     // {
     //   id: 'card3',
     //   href: '#', // Placeholder link for the third card

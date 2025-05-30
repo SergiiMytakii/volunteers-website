@@ -84,20 +84,20 @@ export default function Hero() {
 
   
   return (
-    <header id="home" className="w-full  h-[120vh] bg-cover bg-center relative mt-16 overflow-hidden">
+    <header id="home" className="w-full h-[60vh] md:h-[90vh] bg-cover bg-center relative mt-16 overflow-hidden">
        {heroImages.length === 0 && <LoadingOverlay />}
       <div className="absolute inset-0">
         <Slider {...settings}>
         {heroImages.map((image, index) => (
           image.url && image.url.trim() !== "" && (  
-              <div key={index} className="relative w-screen h-[120vh]">
+              <div key={index} className="relative w-screen h-[60vh] md:h-[90vh]">
                 <Image
                   src={image.url}
                   alt={image.alt}
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                   fill
                   priority
-                  quality={65}
+                  quality={55}
                   decoding='auto'
                   placeholder="blur"
                   blurDataURL="https://firebasestorage.googleapis.com/v0/b/cherch-od2024.firebasestorage.app/o/volunteers-website-assets%2Fplaceholder%2Fblurplaceholder.jpg?alt=media&token=6ba735ae-827f-4896-9844-d460cb9201b3"
@@ -108,21 +108,20 @@ export default function Hero() {
                 />
               </div>
             )
-))}
-        </Slider>
+))}        </Slider>
       </div>
       <div className="absolute inset-0 bg-black/10"></div>
       <div className="relative z-10 max-w-7xl mx-auto h-full flex items-center text-white px-4">
-        <div className="grid grid-cols-1 md:grid-cols-2 w-full gap-8 items-center">
+        <div className="grid grid-cols-1 md:grid-cols-2 w-full gap-3 md:gap-8 items-center">
           <div className="text-left">
             <h1 className="text-5xl font-bold">{currentTranslation?.header}</h1>
           </div>
-          <div className="flex flex-col items-center text-left w-full mt-16">
+          <div className="flex flex-col items-center text-left w-full mt-3 md:mt-16">
 
-            <p className="text-2xl mb-4 max-w-2xl" dangerouslySetInnerHTML={{ __html: currentTranslation?.title || '' }} />
+            <p className="text-3xl mb-4 max-w-2xl" dangerouslySetInnerHTML={{ __html: currentTranslation?.title || '' }} />
             <div className="text-left self-start w-full description-container">
               <p
-                className="text-left text-1xl mb-8 max-w-2xl"
+                className="text-left text-3xl mb-8 max-w-2xl"
                 dangerouslySetInnerHTML={{ __html: currentTranslation?.description || '' }}
               />
             </div>

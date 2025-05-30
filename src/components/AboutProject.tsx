@@ -63,6 +63,7 @@ export default function AboutProject({ translationsApiEndpoint, imagesApiEndpoin
 							src={aboutImage.url}
 							alt={aboutImage.alt}
 							fill
+							  quality={55}
 							sizes="(max-width: 600px) 150vw, 100vw"
 							style={{
 								objectFit: 'cover',
