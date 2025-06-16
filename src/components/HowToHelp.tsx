@@ -193,7 +193,7 @@ export default function HowToHelp({ translationsApiEndpoint, childrenDataApiEndp
             640: { slidesPerView: 2 },
             1024: { slidesPerView: 3 }
           }}
-          className="mt-12 relative !pb-12"
+         className="mt-12 relative !pb-12 custom-swiper"
         >
           {childrenData.map((child, index) => (
             
@@ -249,7 +249,7 @@ export default function HowToHelp({ translationsApiEndpoint, childrenDataApiEndp
                               '#22c55e', // green-500
                           }}
                         >
-                          {Math.round((child.funded || 0) / child.desiredAmount * 100)}%
+                         {child.funded && `${Math.round((child.funded || 0) / child.desiredAmount * 100)}%`}
                         </div>
                       </div>
                     </div>
@@ -280,8 +280,8 @@ export default function HowToHelp({ translationsApiEndpoint, childrenDataApiEndp
                 </div>
               </div>
             </SwiperSlide>
-          ))}
-          <div ref={prevRef} className="swiper-button-prev"></div>
+
+          ))}          <div ref={prevRef} className="swiper-button-prev"></div>
           <div ref={nextRef} className="swiper-button-next"></div>
           <div className="swiper-pagination"></div>
 
