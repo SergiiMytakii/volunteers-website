@@ -197,7 +197,7 @@ export default function HowToHelp({ translationsApiEndpoint, childrenDataApiEndp
         >
           {childrenData.map((child, index) => (
             
-            <SwiperSlide key={child.id} virtualIndex={index} className="h-[850px] pb-4 ">
+            <SwiperSlide key={child.id} virtualIndex={index} className="h-[950px] pb-4 ">
               <div className="bg-white rounded-lg shadow-lg overflow-hidden">
                 <div className="h-[550px] relative">
                   {child.imgSrc && child.imgSrc.trim() !== "" && (
@@ -222,9 +222,10 @@ export default function HowToHelp({ translationsApiEndpoint, childrenDataApiEndp
                   )}
                 </div>
                 <div className="p-6 flex-1 flex flex-col">
-                  <div>
+                  <div className="h-[250px]" >
                     <h3 className="text-xl font-semibold mb-2">{lang == 'uk' ? child.name : child.nameEn}, {child.age}  {lang == 'uk' ? "років" : "years"}</h3>
-                    <p className="text-gray-600 min-h-[4.5rem] line-clamp-3">{lang == 'uk' ? child.dream : child.dreamEn}</p>
+                    <p className="text-gray-600 min-h-[4.5rem] line-clamp-9" dangerouslySetInnerHTML={{ __html: lang == 'uk' ? child.dream : child.dreamEn }}></p>
+                    	
                     {/* <p className="text-gray-600 min-h-[1rem] line-clamp-2">{currentTranslation?.card}  {child.id}</p> */}
                   </div>
                   {/* Progress bar START */}

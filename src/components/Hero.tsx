@@ -112,16 +112,15 @@ export default function Hero() {
       </div>
       <div className="absolute inset-0 bg-black/10"></div>
       <div className="relative z-10 max-w-7xl mx-auto h-full flex items-center text-white px-4">
-        <div className="grid grid-cols-1 md:grid-cols-2 w-full gap-3 md:gap-8 items-center">
-          <div className="text-left">
-            <h1 className="text-5xl font-bold">{currentTranslation?.header}</h1>
+        <div className="flex flex-col md:grid md:grid-cols-2 w-full gap-3 md:gap-8 justify-center md:items-center h-full">
+          <div className="text-left order-1 md:order-1">
+            <h1 className="text-3xl md:text-5xl font-bold">{currentTranslation?.header}</h1>
           </div>
-          <div className="flex flex-col items-center text-left w-full mt-3 md:mt-16">
-
-            <p className="text-3xl mb-4 max-w-2xl" dangerouslySetInnerHTML={{ __html: currentTranslation?.title || '' }} />
-            <div className="text-left self-start w-full description-container">
+          <div className="flex flex-col text-left w-full order-2 md:order-2 md:mt-16">
+            <p className="text-xl md:text-3xl mb-4 max-w-2xl" dangerouslySetInnerHTML={{ __html: currentTranslation?.title || '' }} />
+            <div className="text-left w-full description-container">
               <p
-                className="text-left text-3xl mb-8 max-w-2xl"
+                className="text-left text-lg md:text-3xl mb-4 md:mb-8 max-w-2xl"
                 dangerouslySetInnerHTML={{ __html: currentTranslation?.description || '' }}
               />
             </div>
