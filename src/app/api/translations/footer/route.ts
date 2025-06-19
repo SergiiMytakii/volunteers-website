@@ -24,6 +24,7 @@ export async function GET() {
       rights: row.get('rights'),
       facebookLink: row.get('facebook_link'),
       instagramLink: row.get('instagram_link'),
+			email: row.get('email'),
     }));
     return new Response(JSON.stringify({ data: formattedData }), {
       status: 200,

@@ -14,6 +14,7 @@ interface Translation {
   rights: string;
   facebookLink: string;
   instagramLink: string;
+	email: string;
 }
 
 export default function Footer() {
@@ -62,9 +63,9 @@ export default function Footer() {
           {/* Contact Info */}
           <div className="flex flex-col items-center md:items-start">
             <h3 className="font-semibold text-lg mb-4">{currentTranslation?.titleContacts}</h3>
-            <a href="mailto:alex@ochimadoochey.com" className="flex items-center text-gray-600 hover:text-red-500 transition-colors mb-2">
+            <a href={`mailto:${currentTranslation?.email}`} className="flex items-center text-gray-600 hover:text-red-500 transition-colors mb-2">
               <FaEnvelope className="mr-2" />
-              alex@ochimadoochey.com
+              {currentTranslation?.email}
             </a>
             <p className="text-gray-600">
               {currentTranslation?.phone}
