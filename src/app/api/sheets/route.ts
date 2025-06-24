@@ -6,7 +6,6 @@ import { SHEET_ID } from '@/app/constants';
 
 
 export async function GET(request: Request) {
-  console.log('Fetching data from Google Sheets...');
   try {
     const { searchParams } = new URL(request.url);
     const page = parseInt(searchParams.get('page') || '1');

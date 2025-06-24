@@ -5,13 +5,13 @@ import { ChildrenData } from '@/models/ChildrenData';
 
 export class SheetsService {
   private static instance: SheetsService;
-  private cache: ChildrenData[] = [];
+  private cacheMap: Map<string, ChildrenData[]> = new Map();
   private sheet: any;
 
   private constructor() {
     // Set up automatic cache clearing every hour
     setInterval(() => {
-      this.cache = []
+      this.cacheMap.clear();
     }, 360000); 
   }
 
@@ -21,7 +21,6 @@ export class SheetsService {
     }
     return SheetsService.instance;
   }
-
 
   private async loadSheet(apiEndpoint: string = '/api/sheets'): Promise<ChildrenData[]> {
         try {
@@ -51,18 +50,21 @@ export class SheetsService {
         }
   }
 
-  private async loadRows(apiEndpoint?: string): Promise<any[]> {
-    if (this.cache.length === 0) {
+  private async loadRows(apiEndpoint: string = '/api/sheets'): Promise<any[]> {
+    const cacheKey = apiEndpoint;
+    if (!this.cacheMap.has(cacheKey) || this.cacheMap.get(cacheKey)!.length === 0) {
       const sheet = await this.loadSheet(apiEndpoint);
-      this.cache = sheet.sort((a, b) => {
+      const sortedData = sheet.sort((a, b) => {
         if (a.fundOpen === b.fundOpen) return 0;
         return a.fundOpen ? -1 : 1;
       });
+      this.cacheMap.set(cacheKey, sortedData);
     }
-    return this.cache;
+    
+    return this.cacheMap.get(cacheKey)!;
   }
 
-  public async getChildrenData(page: number, limit: number, apiEndpoint?: string): Promise<any[]> {
+  public async getChildrenData(page: number, limit: number, apiEndpoint: string = '/api/sheets'): Promise<any[]> {
     const rows = await this.loadRows(apiEndpoint);
     const startRow = (page - 1) * limit;
     return rows.slice(startRow, startRow + limit);

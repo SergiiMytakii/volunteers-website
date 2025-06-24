@@ -63,7 +63,7 @@ export default function HowToHelp({ translationsApiEndpoint, childrenDataApiEndp
 
     setIsLoading(true);
     const nextPage = page + 1;
-    const newData = await sheetsService.getChildrenData(nextPage, itemsPerPage);
+    const newData = await sheetsService.getChildrenData(nextPage, itemsPerPage, childrenDataApiEndpoint);
     if (newData) {
       setChildrenData(prev => [...prev, ...newData]);
       setPage(nextPage);
