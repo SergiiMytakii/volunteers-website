@@ -223,7 +223,7 @@ export default function HowToHelp({ translationsApiEndpoint, childrenDataApiEndp
                 </div>
                 <div className="p-6 flex-1 flex flex-col">
                   <div className="h-[250px]" >
-                    <h3 className="text-xl font-semibold mb-2">{lang == 'uk' ? child.name : child.nameEn}, {child.age}  {lang == 'uk' ? "років" : "years"}</h3>
+                    <h3 className="text-xl font-semibold mb-2">{lang == 'uk' ? child.name : child.nameEn}  {child.age && `, ${child.age} ${lang == 'uk' ? "років" : "years"}`}</h3>
                     <p className="text-gray-600 min-h-[4.5rem] line-clamp-9" dangerouslySetInnerHTML={{ __html: lang == 'uk' ? child.dream : child.dreamEn }}></p>
                     	
                     {/* <p className="text-gray-600 min-h-[1rem] line-clamp-2">{currentTranslation?.card}  {child.id}</p> */}
