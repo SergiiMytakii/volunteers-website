@@ -35,6 +35,7 @@ export default function AboutAsPage() {
 	const { lang } = useLanguage();
 	const [translations, setTranslations] = useState<Translation[]>([]);
 	const [aboutImages, setAboutImages] = useState<AboutImages[] | null>(null);
+	const [isMobile, setIsMobile] = useState<boolean>(false);
 
 	useEffect(() => {
 		fetch('/api/translations/aboutAsPage')
@@ -48,6 +49,14 @@ export default function AboutAsPage() {
 					setAboutImages(data.images);
 				}
 			});
+	}, []);
+
+	// Track viewport to adjust how many images we render per section
+	useEffect(() => {
+		const update = () => setIsMobile(window.innerWidth < 768);
+		update();
+		window.addEventListener('resize', update);
+		return () => window.removeEventListener('resize', update);
 	}, []);
 
 	const currentTranslation = translations.find((t) => t.lang === lang) || translations[0];
@@ -67,7 +76,7 @@ export default function AboutAsPage() {
 
 					{/* Photo Grid - 3x3 */}
 					<div className="grid grid-cols-2 md:grid-cols-3 gap-4 mt-12">
-						{aboutImages?.slice(0, window.innerWidth < 768 ? 6 : 9).map((photo, index) => (
+						{aboutImages?.slice(0, isMobile ? 6 : 9).map((photo, index) => (
 							<div
 								key={index}
 								className="aspect-square relative hover:scale-105 transition-transform">
@@ -108,14 +117,17 @@ export default function AboutAsPage() {
 					</div>
 
 					<div className="columns-1 md:columns-3 gap-4 mt-12">
-						{aboutImages?.slice(9, window.innerWidth < 768 ? 13 : 17).map((photo, index) => (
+						{aboutImages?.slice(9, isMobile ? 13 : 17).map((photo, index) => (
 							<div key={index} className="mb-4 relative hover:scale-105 transition-transform">
 								<Image
 									src={photo.url}
 									alt={photo.alt}
+									sizes="(max-width: 768px) 100vw, 33vw"
 									width={800}
 									height={600}
 									quality={65}
+									placeholder="blur"
+									blurDataURL="https://firebasestorage.googleapis.com/v0/b/cherch-od2024.firebasestorage.app/o/volunteers-website-assets%2Fplaceholder%2Fblurplaceholder.jpg?alt=media&token=6ba735ae-827f-4896-9844-d460cb9201b3"
 									style={{
 										objectFit: 'cover',
 										objectPosition: 'top',
@@ -144,8 +156,11 @@ export default function AboutAsPage() {
 									src={photo.url}
 									alt={photo.alt}
 									quality={65}
+									sizes="320px"
 									width={800}
 									height={600}
+									placeholder="blur"
+									blurDataURL="https://firebasestorage.googleapis.com/v0/b/cherch-od2024.firebasestorage.app/o/volunteers-website-assets%2Fplaceholder%2Fblurplaceholder.jpg?alt=media&token=6ba735ae-827f-4896-9844-d460cb9201b3"
 									style={{
 										objectFit: 'cover',
 										objectPosition: 'top',

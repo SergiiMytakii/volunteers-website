@@ -11,7 +11,6 @@ export default function SuperHeroPage() {
         <HowToHelp translationsApiEndpoint="/api/translations/superHeroHowToHelp" childrenDataApiEndpoint="/api/superHeroSheets" giftButton={false} donationDialogApiEndpoint="/api/translations/superHeroDonationDialog"/>
         <FAQ translationsApiEndpoint="/api/translations/superHeroFaq" />
         <Report
-          title="Report"
           photosApiEndpoint="/api/images/superHeroReport"
           videosApiEndpoint="/api/videos/superHeroReport"
         />

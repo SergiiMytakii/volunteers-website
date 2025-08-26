@@ -1,8 +1,9 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import { FaPlay } from 'react-icons/fa';
+import { useLanguage } from '@/app/LanguageContext';
 
 interface MediaItem {
   name: string;
@@ -15,7 +16,52 @@ interface ReportProps {
   title?: string;
 }
 
-export default function Report({ photosApiEndpoint, videosApiEndpoint, title = 'Report' }: ReportProps) {
+function LazyVideo({
+  src,
+  containerClassName,
+  videoClassName,
+}: {
+  src: string;
+  containerClassName?: string;
+  videoClassName?: string;
+}) {
+  const ref = useRef<HTMLDivElement | null>(null);
+  const [visible, setVisible] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (!ref.current) return undefined;
+    const el = ref.current;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setVisible(true);
+            observer.disconnect();
+          }
+        });
+      },
+      { rootMargin: '200px' }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <div ref={ref} className={containerClassName}>
+      {visible ? (
+        // eslint-disable-next-line jsx-a11y/media-has-caption
+        <video preload="metadata" className={videoClassName}>
+          <source src={src} />
+        </video>
+      ) : (
+        <div className={videoClassName ? `${videoClassName} bg-black/20` : 'w-full h-full bg-black/20'} />
+      )}
+    </div>
+  );
+}
+
+export default function Report({ photosApiEndpoint, videosApiEndpoint }: ReportProps) {
+  const { lang } = useLanguage();
   const [photos, setPhotos] = useState<MediaItem[]>([]);
   const [videos, setVideos] = useState<MediaItem[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
@@ -101,7 +147,7 @@ export default function Report({ photosApiEndpoint, videosApiEndpoint, title = '
   return (
     <section id="report" className="w-full bg-white py-16">
       <div className="max-w-7xl mx-auto px-4">
-        <h2 className="text-4xl font-bold text-center mb-12">{title}</h2>
+        <h2 className="text-4xl font-bold text-center mb-12">{ lang === 'uk' ? 'Як це було?' : 'How was it?'}</h2>
 
         {loading && <p className="text-center">Loading media...</p>}
         {error && <p className="text-center text-red-600">{error}</p>}
@@ -133,10 +179,7 @@ export default function Report({ photosApiEndpoint, videosApiEndpoint, title = '
                     />
                   ) : (
                     <div className="relative">
-                      {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
-                      <video preload="metadata" className="w-full rounded-lg">
-                        <source src={item.url} />
-                      </video>
+                      <LazyVideo src={item.url} containerClassName="" videoClassName="w-full rounded-lg" />
                       <div className="absolute inset-0 flex items-center justify-center">
                         <div className="bg-black/50 text-white rounded-full p-3">
                           <FaPlay className="w-6 h-6" />
@@ -179,13 +222,11 @@ export default function Report({ photosApiEndpoint, videosApiEndpoint, title = '
                     />
                   ) : (
                     <div className="absolute inset-0">
-                      {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
-                      <video
-                        preload="metadata"
-                        className="absolute inset-0 w-full h-full object-cover rounded-lg"
-                      >
-                        <source src={item.url} />
-                      </video>
+                      <LazyVideo
+                        src={item.url}
+                        containerClassName="absolute inset-0"
+                        videoClassName="absolute inset-0 w-full h-full object-cover rounded-lg"
+                      />
                       <div className="absolute inset-0 flex items-center justify-center">
                         <div className="bg-black/50 text-white rounded-full p-3">
                           <FaPlay className="w-6 h-6" />
@@ -224,9 +265,7 @@ export default function Report({ photosApiEndpoint, videosApiEndpoint, title = '
                     ) : (
                       // eslint-disable-next-line jsx-a11y/media-has-caption
                       <div className="relative">
-                        <video preload="metadata" className="w-full rounded-lg">
-                          <source src={item.url} />
-                        </video>
+                        <LazyVideo src={item.url} containerClassName="" videoClassName="w-full rounded-lg" />
                         <div className="absolute inset-0 flex items-center justify-center">
                           <div className="bg-black/50 text-white rounded-full p-3">
                             <FaPlay className="w-6 h-6" />
