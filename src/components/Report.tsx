@@ -31,19 +31,53 @@ function LazyVideo({
   useEffect(() => {
     if (!ref.current) return undefined;
     const el = ref.current;
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
+
+    const checkInView = () => {
+      const rect = el.getBoundingClientRect();
+      const vw = window.innerWidth || document.documentElement.clientWidth;
+      const vh = window.innerHeight || document.documentElement.clientHeight;
+      // Consider 200px margin similar to rootMargin
+      const inView =
+        rect.bottom >= -200 &&
+        rect.right >= -200 &&
+        rect.top <= vh + 200 &&
+        rect.left <= vw + 200;
+      if (inView) setVisible(true);
+      return inView;
+    };
+
+    // If already in view, render immediately
+    if (checkInView()) return undefined;
+
+    let observer: IntersectionObserver | null = null;
+    if ('IntersectionObserver' in window) {
+      observer = new IntersectionObserver(
+        (entries) => {
+          if (entries.some((e) => e.isIntersecting)) {
             setVisible(true);
-            observer.disconnect();
+            observer?.disconnect();
           }
-        });
-      },
-      { rootMargin: '200px' }
-    );
-    observer.observe(el);
-    return () => observer.disconnect();
+        },
+        { root: null, rootMargin: '200px', threshold: 0.01 }
+      );
+      observer.observe(el);
+    }
+
+    // Scroll/resize fallback in case IO doesn't fire
+    const onScrollOrResize = () => {
+      if (checkInView()) {
+        window.removeEventListener('scroll', onScrollOrResize);
+        window.removeEventListener('resize', onScrollOrResize);
+      }
+    };
+    window.addEventListener('scroll', onScrollOrResize, { passive: true });
+    window.addEventListener('resize', onScrollOrResize, { passive: true });
+
+    return () => {
+      observer?.disconnect();
+      window.removeEventListener('scroll', onScrollOrResize);
+      window.removeEventListener('resize', onScrollOrResize);
+    };
   }, []);
 
   return (
