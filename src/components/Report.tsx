@@ -18,10 +18,12 @@ interface ReportProps {
 
 function LazyVideo({
   src,
+  posterSrc,
   containerClassName,
   videoClassName,
 }: {
   src: string;
+  posterSrc?: string;
   containerClassName?: string;
   videoClassName?: string;
 }) {
@@ -73,10 +75,23 @@ function LazyVideo({
     window.addEventListener('scroll', onScrollOrResize, { passive: true });
     window.addEventListener('resize', onScrollOrResize, { passive: true });
 
+    // Mobile-friendly polling fallback (helps when scroll happens on non-window containers)
+    // Stops automatically once visible or after timeout
+    const start = Date.now();
+    const intervalId = window.setInterval(() => {
+      if (checkInView()) {
+        window.clearInterval(intervalId);
+      } else if (Date.now() - start > 8000) {
+        // Give up after 8s to avoid permanent polling
+        window.clearInterval(intervalId);
+      }
+    }, 300);
+
     return () => {
       observer?.disconnect();
       window.removeEventListener('scroll', onScrollOrResize);
       window.removeEventListener('resize', onScrollOrResize);
+      window.clearInterval(intervalId);
     };
   }, []);
 
@@ -84,11 +99,20 @@ function LazyVideo({
     <div ref={ref} className={containerClassName}>
       {visible ? (
         // eslint-disable-next-line jsx-a11y/media-has-caption
-        <video preload="metadata" className={videoClassName}>
-          <source src={src} />
-        </video>
+        <video preload="metadata" poster={posterSrc} playsInline className={videoClassName} src={src} />
       ) : (
-        <div className={videoClassName ? `${videoClassName} bg-black/20` : 'w-full h-full bg-black/20'} />
+        posterSrc ? (
+          <Image
+            src={posterSrc}
+            alt="Video preview"
+            fill
+            className={videoClassName ? `${videoClassName} object-cover` : 'absolute inset-0 w-full h-full object-cover'}
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            priority={false}
+          />
+        ) : (
+          <div className={videoClassName ? `${videoClassName} bg-black/20` : 'w-full h-full bg-black/20'} />
+        )
       )}
     </div>
   );
@@ -213,7 +237,12 @@ export default function Report({ photosApiEndpoint, videosApiEndpoint }: ReportP
                     />
                   ) : (
                     <div className="relative">
-                      <LazyVideo src={item.url} containerClassName="" videoClassName="w-full rounded-lg" />
+                      <LazyVideo
+                        src={item.url}
+                        posterSrc="/logo.png"
+                        containerClassName="relative pb-[56.25%]"
+                        videoClassName="absolute inset-0 w-full h-full rounded-lg object-cover"
+                      />
                       <div className="absolute inset-0 flex items-center justify-center">
                         <div className="bg-black/50 text-white rounded-full p-3">
                           <FaPlay className="w-6 h-6" />
@@ -258,6 +287,7 @@ export default function Report({ photosApiEndpoint, videosApiEndpoint }: ReportP
                     <div className="absolute inset-0">
                       <LazyVideo
                         src={item.url}
+                        posterSrc="/logo.png"
                         containerClassName="absolute inset-0"
                         videoClassName="absolute inset-0 w-full h-full object-cover rounded-lg"
                       />
@@ -299,7 +329,12 @@ export default function Report({ photosApiEndpoint, videosApiEndpoint }: ReportP
                     ) : (
                       // eslint-disable-next-line jsx-a11y/media-has-caption
                       <div className="relative">
-                        <LazyVideo src={item.url} containerClassName="" videoClassName="w-full rounded-lg" />
+                        <LazyVideo
+                          src={item.url}
+                          posterSrc="/logo.png"
+                          containerClassName="relative pb-[56.25%]"
+                          videoClassName="absolute inset-0 w-full h-full rounded-lg object-cover"
+                        />
                         <div className="absolute inset-0 flex items-center justify-center">
                           <div className="bg-black/50 text-white rounded-full p-3">
                             <FaPlay className="w-6 h-6" />
@@ -339,9 +374,12 @@ export default function Report({ photosApiEndpoint, videosApiEndpoint }: ReportP
                     ) : (
                       // eslint-disable-next-line jsx-a11y/media-has-caption
                       <div className="relative">
-                        <video preload="metadata" className="w-full rounded-lg">
-                          <source src={item.url} />
-                        </video>
+                        <LazyVideo
+                          src={item.url}
+                          posterSrc="https://firebasestorage.googleapis.com/v0/b/cherch-od2024.firebasestorage.app/o/volunteers-website-assets%2Fplaceholder%2Fblurplaceholder.jpg?alt=media&token=6ba735ae-827f-4896-9844-d460cb9201b3"
+                          containerClassName="relative pb-[56.25%]"
+                          videoClassName="absolute inset-0 w-full h-full rounded-lg object-cover"
+                        />
                         <div className="absolute inset-0 flex items-center justify-center">
                           <div className="bg-black/50 text-white rounded-full p-3">
                             <FaPlay className="w-6 h-6" />
