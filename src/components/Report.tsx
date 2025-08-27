@@ -8,6 +8,7 @@ import { useLanguage } from '@/app/LanguageContext';
 interface MediaItem {
   name: string;
   url: string;
+  thumbnail?: string | null;
 }
 
 interface ReportProps {
@@ -154,10 +155,13 @@ export default function Report({ photosApiEndpoint, videosApiEndpoint }: ReportP
           : [];
 
         const videoItems: MediaItem[] = Array.isArray(videosJson.videos)
-          ? videosJson.videos.map((vid: { url: string; name?: string }) => ({
-              name: vid.name || vid.url,
-              url: vid.url,
-            }))
+          ? videosJson.videos.map(
+              (vid: { url: string; name?: string; thumbnail?: string | null }) => ({
+                name: vid.name || vid.url,
+                url: vid.url,
+                thumbnail: vid.thumbnail ?? null,
+              })
+            )
           : [];
 
         if (!cancelled) {
@@ -180,9 +184,20 @@ export default function Report({ photosApiEndpoint, videosApiEndpoint }: ReportP
   }, [photosApiEndpoint, videosApiEndpoint]);
   // Build combined media list (interleave videos and photos)
   const maxLen = Math.max(videos.length, photos.length);
-  const combined: Array<{ type: 'photo' | 'video'; name: string; url: string }> = [];
+  const combined: Array<{
+    type: 'photo' | 'video';
+    name: string;
+    url: string;
+    thumbnail?: string | null;
+  }> = [];
   for (let i = 0; i < maxLen; i += 1) {
-    if (i < videos.length) combined.push({ type: 'video', name: videos[i].name, url: videos[i].url });
+    if (i < videos.length)
+      combined.push({
+        type: 'video',
+        name: videos[i].name,
+        url: videos[i].url,
+        thumbnail: videos[i].thumbnail ?? null,
+      });
     if (i < photos.length) combined.push({ type: 'photo', name: photos[i].name, url: photos[i].url });
   }
 
@@ -239,7 +254,7 @@ export default function Report({ photosApiEndpoint, videosApiEndpoint }: ReportP
                     <div className="relative">
                       <LazyVideo
                         src={item.url}
-                        posterSrc="/logo.png"
+                        posterSrc={item.thumbnail || '/logo.png'}
                         containerClassName="relative pb-[56.25%]"
                         videoClassName="absolute inset-0 w-full h-full rounded-lg object-cover"
                       />
@@ -287,7 +302,7 @@ export default function Report({ photosApiEndpoint, videosApiEndpoint }: ReportP
                     <div className="absolute inset-0">
                       <LazyVideo
                         src={item.url}
-                        posterSrc="/logo.png"
+                        posterSrc={item.thumbnail || '/logo.png'}
                         containerClassName="absolute inset-0"
                         videoClassName="absolute inset-0 w-full h-full object-cover rounded-lg"
                       />
@@ -331,7 +346,7 @@ export default function Report({ photosApiEndpoint, videosApiEndpoint }: ReportP
                       <div className="relative">
                         <LazyVideo
                           src={item.url}
-                          posterSrc="/logo.png"
+                          posterSrc={item.thumbnail || '/logo.png'}
                           containerClassName="relative pb-[56.25%]"
                           videoClassName="absolute inset-0 w-full h-full rounded-lg object-cover"
                         />
@@ -376,7 +391,7 @@ export default function Report({ photosApiEndpoint, videosApiEndpoint }: ReportP
                       <div className="relative">
                         <LazyVideo
                           src={item.url}
-                          posterSrc="https://firebasestorage.googleapis.com/v0/b/cherch-od2024.firebasestorage.app/o/volunteers-website-assets%2Fplaceholder%2Fblurplaceholder.jpg?alt=media&token=6ba735ae-827f-4896-9844-d460cb9201b3"
+                          posterSrc={item.thumbnail || '/logo.png'}
                           containerClassName="relative pb-[56.25%]"
                           videoClassName="absolute inset-0 w-full h-full rounded-lg object-cover"
                         />
